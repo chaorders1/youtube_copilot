@@ -1,0 +1,27 @@
+Video Metadata:
+==============
+
+Source Information:
+- Video File: Claude ｜ Computer use for coding
+- Original Path: /Users/yuanlu/Code/youtube_copilot/data/youtube_video/Claude ｜ Computer use for coding.mp4
+- Codec: h264
+
+Video Properties:
+- Resolution: 1920x1080
+- FPS: 23
+- Total Frames: 4388
+- Duration: 00:03:10 (190.78 seconds)
+
+Extraction Settings:
+- Frame Interval: 10.0 seconds
+- Frames Saved Every: 230 frames
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/frames_Claude ｜ Computer use for coding
+
+File Naming Convention:
+timestamp_HHMMSS_frame_XXXX_time_YYYYs.jpg
+where:
+- HHMMSS: Timestamp in hours:minutes:seconds
+- XXXX: Frame number (zero-padded)
+- YYYY: Timestamp in seconds
+
+Processing Date: 2024-11-01 19:59:24

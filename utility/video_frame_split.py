@@ -1,6 +1,7 @@
 import cv2
 import os
 from pathlib import Path
+from datetime import datetime
 
 def format_timestamp(seconds: float) -> str:
     """Convert seconds to HH:MM:SS format"""
@@ -51,17 +52,41 @@ def video_frame_split(video_path: str, output_dir: str = None, time_interval: fl
     # Calculate frame interval based on time_interval
     frame_interval = int(time_interval * fps) if time_interval else 1
     
-    # Create metadata file
+    # Get additional video properties
+    width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
+    height = int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    codec = int(video.get(cv2.CAP_PROP_FOURCC))
+    codec_name = ''.join([chr((codec >> 8 * i) & 0xFF) for i in range(4)])
+    
+    # Create metadata file with enhanced information
     metadata_path = output_path / 'metadata.txt'
     with open(metadata_path, 'w', encoding='utf-8') as f:
-        f.write(f"Video: {video_name}\n")
-        f.write(f"FPS: {fps}\n")
-        f.write(f"Total Frames: {frame_count}\n")
-        f.write(f"Duration: {format_timestamp(duration)}\n")
-        f.write(f"Frame Interval: {time_interval if time_interval else '1/fps'} seconds\n")
-        f.write("\nFrame naming format:\n")
-        f.write("timestamp_HHMMSS_frame_XXXX_time_YYYYs.jpg\n")
-        f.write("where XXXX is the frame number and YYYY is the timestamp in seconds\n")
+        f.write(f"Video Metadata:\n")
+        f.write(f"==============\n\n")
+        f.write(f"Source Information:\n")
+        f.write(f"- Video File: {video_name}\n")
+        f.write(f"- Original Path: {video_path}\n")
+        f.write(f"- Codec: {codec_name}\n")
+        
+        f.write(f"\nVideo Properties:\n")
+        f.write(f"- Resolution: {width}x{height}\n")
+        f.write(f"- FPS: {fps}\n")
+        f.write(f"- Total Frames: {frame_count}\n")
+        f.write(f"- Duration: {format_timestamp(duration)} ({duration:.2f} seconds)\n")
+        
+        f.write(f"\nExtraction Settings:\n")
+        f.write(f"- Frame Interval: {time_interval if time_interval else '1/fps'} seconds\n")
+        f.write(f"- Frames Saved Every: {frame_interval} frames\n")
+        f.write(f"- Output Directory: {output_path}\n")
+        
+        f.write(f"\nFile Naming Convention:\n")
+        f.write(f"timestamp_HHMMSS_frame_XXXX_time_YYYYs.jpg\n")
+        f.write(f"where:\n")
+        f.write(f"- HHMMSS: Timestamp in hours:minutes:seconds\n")
+        f.write(f"- XXXX: Frame number (zero-padded)\n")
+        f.write(f"- YYYY: Timestamp in seconds\n")
+        
+        f.write(f"\nProcessing Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
     
     frame_number = 0
     saved_count = 0
