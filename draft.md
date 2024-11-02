@@ -24,8 +24,11 @@ This is prepared for Claude day. Youtubers can use this to brainstrom their proj
 ### Find similar youtube videos
 1. You will be given a youtube video url
 2. Use chrome icognito mode and open the youtube video url
-3. 
 
+
+### Youtube video download
+1. Use yt-dlp to download the youtube video and save to the "data/youtube_video" folder
+1.1 Reference of this package is https://github.com/yt-dlp/yt-dlp
 
 
 
