@@ -1,5 +1,6 @@
 """
 Module for replying to YouTube comments using Claude API.
+python -m utility.youtube_comments_reply /Users/yuanlu/Code/youtube_copilot/data/comments
 """
 import os
 import argparse

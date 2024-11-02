@@ -1,5 +1,7 @@
 """
 Module for analyzing YouTube channel personas using Claude API.
+python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_anthropic_youtube_chanel
+python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_openai_youtube_chanel
 """
 import os
 import base64
@@ -35,62 +37,86 @@ class PersonaAnalyzer:
 
     # Define prompt template directly in code
     PROMPT_TEMPLATE = """
-    You are an expert in YouTube content creation and an advisor to the content creator shown in the following screenshots. Analyze the content creator's channel using the provided framework and generate an artifact in markdown format. Your language should be vivid, descriptive, and easy to understand. Strictly follow the framework structure and maintain consistent formatting.
-
-First, carefully examine the following screenshots of the YouTube content creator's channel:
+    You are an expert in YouTube content creation and an advisor to the content creator shown in the following screenshots. Your task is to analyze these screenshots and generate a comprehensive report in markdown format. Here are the screenshots:
 
 <screenshots>
 {{SCREENSHOTS}}
 </screenshots>
 
-Now, analyze the content creator's channel using the following framework:
+Carefully examine these screenshots and use the information they contain to complete the following framework. Your language should be vivid, descriptive, and easy to understand. Please strictly follow the framework structure and maintain consistent formatting throughout your report.
 
-A. Persona
-Analyze the content creator's persona by addressing the following points:
-A1. Perspective + Age/Gender + Two-word Description
-A2. Number of followers
-A3. Does creator show own face (if not, take note)
-A4. Broad Category
-A5. Niche
-A6. Level of Expertise in subject matter (rate 1-5 and provide brief evaluation)
-A7. Self-Labels (provide 5-6 self-labels)
-A8. Linguistic Tone
-A9. Personal or brand Image (about 50 words)
-A10. Personal Values (about 50 words)
-A11. Key Personal Events (if available)
-A12. Narrative Structure (rate 1-4)
-A13. Aesthetics (briefly describe color schemes, composition methods, and style preferences)
-A14. Main Setting/Location
-A15. Cultural background / Appearance (if visible or information available)
-A16. Language use (if any language other than English is used)
+Your report should be divided into three main parts:
 
-B. Content Strategy / Packaging
-Analyze the content creator's strategy and packaging by addressing the following points:
-B1. RANK Viral Video Themes (about 100 words, pay attention to view counts)
-B2. RANK Viral video examples (list topic, title, and view count for top videos)
-B3. How Viral Videos Hit Audience Pain Points (max 5 bullet points, about 50 words total)
-B4. Packaging (brief summary of top video idea + topic + thumbnail & title)
-B5. List of 10-15 keywords for this content creator to find similar accounts
-B6. Calculate average views in creator's channel
-B7. Look at number of views on the most popular 5 videos in this creator's channel
-B8. Calculate Outlier score for popular videos (views divided by average views)
+PART 1: CLASSIFICATION & METRICS
+In this section, complete the following steps:
 
-C. Audience Profile
-Analyze the content creator's audience profile by addressing the following points:
-C1. Target Audience Age/Gender/Marital Status
-C2. Target Audience Region (if known)
-C3. Target Audience Educational Background / Occupation
-C4. Target Audience Lifestyle
-C5. Target Audience specific preferences / subculture
+1. Basic Channel Data
+   - Identify the channel name and subscriber count
+   - List the top 10 performing videos shown, ranked by exact views
+   - Calculate the average views across these videos
+   - Note the themes of the top 5 performing videos and analyze what deeper audience desires these reveal
 
-After completing the analysis, format your response as follows:
+2. Channel Classification
+   - Identify the primary category of the channel:
+     a) Personality/Entertainment Driven
+     b) Professional/Educational
+     c) Curated/Aggregate
+   - Identify the main area of interest (e.g., Food, Travel, Technology, Fashion, Education, Relationships, Gaming)
+   - Identify the specific subculture or niche (e.g., Practical Italian recipes)
+   - Note whether the creator shows their own face in the content
 
-1. Use markdown formatting for headers and subheaders.
-2. Double-check all numbers of views and numbers of followers for accuracy.
-3. Provide a short summary of about 300 words at the beginning of the artifact.
-4. Ensure that the entire analysis follows the given framework structure.
+PART 2: CATEGORY-SPECIFIC ANALYSIS
+Based on your classification in Part 1, follow the relevant framework:
 
-Present your analysis in a single, cohesive markdown document. Begin with the summary, followed by the detailed analysis under each section (A, B, and C) of the framework.
+FOR PERSONALITY/ENTERTAINMENT CHANNELS ONLY:
+Analyze the Creator Essence, paying particular attention to cultural resonance, audience connection, and authentic storytelling elements. Include:
+- Linguistic style (e.g., humorous, serious, warm, thoughtful)
+- Use of regional or subculture slang / emojis / catchphrases if any
+- Quote examples from video titles (double check for accuracy)
+- Distinguishing demographic or cultural characteristics if shown
+- Personal Values (in about 50 words) including core beliefs demonstrated, what they stand for, life philosophy
+- Key Life Events & Journey ONLY IF SHOWN: Origin story, major transitions, career changes, location moves, significant milestones, current situation
+- Aesthetics: Briefly describe color schemes, composition methods, and style preferences
+
+FOR PROFESSIONAL/EDUCATIONAL CHANNELS ONLY:
+Analyze the Brand Essence, paying particular attention to brand positioning, authority, subcultural or local resonance, and audience connection. Include:
+- Expertise demonstration
+- Presentation style
+- Brand mission / corporate identity
+- Target location, demographic or culture characteristics
+- Value proposition clarity
+- Credibility markers
+
+FOR CURATED CHANNELS ONLY:
+Analyze the Curation Effectiveness, paying particular attention to theme and flow, subcultural or local resonance, and audience connection. Include:
+- Content selection criteria
+- Value addition methods
+- Source management
+- Theme consistency
+- Community building
+
+PART 3: UNIVERSAL ANALYSIS
+Complete this section for all channels:
+
+1. Content Strategy
+   - Overall impression of brand personality (about 100 words, can include examples and quotes)
+   - Most successful formats and themes
+   - Title/thumbnail patterns
+   - Upload frequency
+   - List of 5 key phrases to find similar accounts
+
+2. Brief Summary (300 words, can include examples and quotes)
+   - Key success factors
+   - Audience pain points
+   - What the audience aspires to be
+   - Primary strengths
+   - Growth opportunities
+   - Unique value proposition
+
+Format your entire report in markdown, using appropriate headers, bullet points, and emphasis where needed. Ensure that your analysis is thorough, insightful, and based solely on the information provided in the screenshots. Do not make assumptions or include information not evident from the given data.
+
+Begin your analysis now.
+
     """
 
     def __init__(self, api_key: str = None):
