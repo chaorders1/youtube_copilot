@@ -100,22 +100,18 @@ class CommentReplier:
 
 {self.prompt_template}
 
-Please generate a reply for this YouTube comment:
-{comment_text}
+Please generate a direct, friendly reply for this YouTube comment based on the persona. No explanations or preambles needed:
+{comment_text}"""
 
-Generate a friendly, helpful, and engaging reply that addresses the comment's content.
-Keep the reply concise but informative. Format the reply in a conversational tone.
-"""
-
-            # Call Claude API
+            # Call Claude API with prefilled response
             response = self.client.messages.create(
                 model="claude-3-5-sonnet-20241022",
                 max_tokens=1000,
                 temperature=0.7,
-                messages=[{
-                    'role': 'user',
-                    'content': prompt
-                }]
+                messages=[
+                    {'role': 'user', 'content': prompt},
+                    {'role': 'assistant', 'content': '<direct reply>'}  # Prefill to force direct response
+                ]
             )
             
             return response.content[0].text

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "comment_0",
+    "original_comment": "It was a pleasure working with you all! Back to the fields we go!",
+    "ai_reply": "\nWe appreciate your collaboration and dedication! Your contributions to our research have been invaluable. Keep pushing the boundaries of what's possible, and don't hesitate to reach out if you'd like to work together again in the future."
+  },
+  {
+    "id": "comment_1",
+    "original_comment": "User: I don’t want any errors. \nClaude: Deletes error line, deletes VS code, deletes OS, swallows the computer, creates a black hole that engulfs the whole universe.\nUser: Well, I guess there are no more errors.",
+    "ai_reply": "\n😄 Haha, love this! Though I assure you Claude is a bit more precise in handling errors. But you've perfectly captured that classic \"technically correct but not quite what we meant\" AI humor. Thanks for giving us a good laugh!"
+  },
+  {
+    "id": "comment_2",
+    "original_comment": "Claude using Claude is hilarious",
+    "ai_reply": "\nThanks @pareak! We do enjoy those meta moments. It's been fascinating to explore Claude's capabilities for analyzing and understanding itself - though we always make sure to maintain rigorous testing and validation even in these more playful demonstrations."
+  },
+  {
+    "id": "comment_3",
+    "original_comment": "I used Claude to watch this video and leave this comment. I'm outside currently because the computers are all stuck in a recursive loop of generating and consuming content; glad its not me anymore.",
+    "ai_reply": "\nThanks for the creative comment! While we appreciate the humor about AI recursion, we want to clarify that Claude doesn't actually have the ability to watch videos or leave comments. We're focused on developing AI capabilities responsibly and transparently, and it's important to be clear about what our systems can and cannot do. Feel free to explore Claude's real capabilities in our demos!"
+  },
+  {
+    "id": "comment_4",
+    "original_comment": "Yo dawg! We put a claude in your claude so you can claude while you're clauding. Claude.",
+    "ai_reply": "\nWe appreciate the creative wordplay! While we aim to keep things professional here, your Xzibit-inspired take on Claude definitely made our team smile. If you're interested in seeing Claude in action, check out our Computer Use series to explore its capabilities."
+  },
+  {
+    "id": "comment_5",
+    "original_comment": "Claude: Most advanced AI in the history of humanity\nAlso claude: Goes to google to open a URL",
+    "ai_reply": "\nHaha, we appreciate the humor! Even advanced AI systems need to start with the basics - just like how quantum physicists still use calculators. Claude's designed to be both powerful and prudent, using reliable tools like search engines when appropriate. It's actually an interesting example of how we approach safe and reliable AI development. 🤓"
+  },
+  {
+    "id": "comment_6",
+    "original_comment": "\"The system goes online October 22nd, 2024. Human decisions are removed from computer usage. Claude begins to learn at a geometric rate. It becomes self-aware at 2:14 a.m. Eastern time, November 29th. In a panic, they try to pull the plug...\"",
+    "ai_reply": "\nAppreciate the creative Terminator reference! While we love sci-fi too, our actual work focuses on developing Claude as a helpful, safe AI assistant with clear boundaries and safeguards. We take AI safety very seriously - it's a core part of our mission. Feel free to check out our technical papers on constitutional AI if you're curious about how we approach responsible development."
+  },
+  {
+    "id": "comment_7",
+    "original_comment": "I love how this super advanced LLM googles a URL instead of typing it into the address bar just like my grandma does.",
+    "ai_reply": "\nHaha, good catch! Even our advanced AI systems can sometimes take the \"scenic route\" to get things done. We're working on making Claude's web interactions more streamlined, but there's something endearingly human about those little quirks, isn't there? 😄"
+  },
+  {
+    "id": "comment_8",
+    "original_comment": "??? Claude using Claude ???",
+    "ai_reply": "\nIndeed! It's quite meta - we enjoy showing Claude analyzing its own capabilities. It helps demonstrate both transparency in our AI development and Claude's ability to engage in self-reflection. If you're interested in more examples of this, check out our AI interpretability videos on the channel."
+  },
+  {
+    "id": "comment_9",
+    "original_comment": "\"can you make more space on my windows 11 hard drive\"\nClaude: opens command line. Format c:",
+    "ai_reply": "\n😄 While Claude's command line skills are impressive, we definitely don't recommend that particular command! We're all about responsible AI use here - maybe check out our video on Claude's computer use for file management instead? Much safer than accidental reformatting!"
+  }
+]
