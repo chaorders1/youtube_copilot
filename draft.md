@@ -3,6 +3,99 @@ This is prepared for Claude day. Youtubers can use this to brainstrom their proj
 
 
 ** # Core functionalities **
+
+### Youtube video download
+1. Download videos using yt-dlp library with flexible options:
+   - Video formats: MP4, WebM, audio-only
+   - Quality options: 4K, 1080p, 720p, 480p, 360p
+   - Optional subtitle downloads in multiple languages
+   - Sanitized filenames for system compatibility
+
+2. Command line usage examples:
+   ```bash
+   # Basic video download in MP4 format
+   python youtube_video_download.py url='https://www.youtube.com/watch?v=VIDEO_ID'
+
+   # Download with specific quality
+   python youtube_video_download.py url='https://www.youtube.com/watch?v=VIDEO_ID' quality='720p'
+
+   # Download audio only
+   python youtube_video_download.py url='https://www.youtube.com/watch?v=VIDEO_ID' format='audio'
+
+   # Download with English subtitles
+   python youtube_video_download.py url='https://www.youtube.com/watch?v=VIDEO_ID' subtitles='en'
+   ```
+
+3. Output Structure:
+   ```
+   data/youtube_video/
+   ├── video_title.mp4           # Downloaded video file
+   ├── video_title.en.vtt        # English subtitles (if requested)
+   └── video_title.mp3           # Audio-only file (if audio format selected)
+   ```
+
+4. Features:
+   - Automatic filename sanitization (removes special characters)
+   - Progress tracking during download
+   - Detailed logging of download process
+   - Support for multiple quality options
+   - Flexible format selection
+   - Subtitle download capability
+
+5. Dependencies:
+   - Python 3.6+
+   - yt-dlp library
+   - FFmpeg (for audio extraction and subtitle conversion)
+
+### Video frame split
+1. Extract frames from video files at specified intervals using OpenCV:
+   - Save frames as JPEG images with detailed metadata
+   - Support various video formats (MP4, AVI, MOV)
+   - Track extraction progress
+   - Generate comprehensive metadata file
+
+2. Command line usage examples:
+   ```bash
+   # Basic usage - extract every frame
+   python video_frame_split.py "path/to/video.mp4"
+
+   # Extract frames every 10 seconds with custom output directory
+   python video_frame_split.py "path/to/video.mp4" frames_output 10.0
+   ```
+
+3. Output Structure:
+   ```
+   data/frames_output/
+   ├── metadata.txt                      # Extraction metadata and video info
+   ├── timestamp_000000_frame_0000_time_0.0s.jpg
+   ├── timestamp_000010_frame_0300_time_10.0s.jpg
+   └── ...
+   ```
+
+4. Features:
+   - Frame extraction at specified time intervals
+   - Detailed metadata generation including:
+     - Video properties (resolution, FPS, duration)
+     - Extraction settings
+     - File naming conventions
+     - Processing timestamps
+   - Progress tracking and logging
+   - Organized output structure
+   - Timestamp and frame number in filenames
+
+5. Dependencies:
+   - Python 3.6+
+   - OpenCV (cv2)
+
+6. Metadata File Contents:
+   - Source video information
+   - Video properties (codec, resolution, FPS)
+   - Extraction settings
+   - File naming convention details
+   - Processing date and time
+
+
+
 ### Youtube channel persona analysis
 1. Use apify to take screenshot of youtube channel
 2. Take screenshot of youtube channel video tab (here does not find apify actor)
@@ -24,11 +117,6 @@ This is prepared for Claude day. Youtubers can use this to brainstrom their proj
 ### Find similar youtube videos
 1. You will be given a youtube video url
 2. Use chrome icognito mode and open the youtube video url
-
-
-### Youtube video download
-1. Use yt-dlp to download the youtube video and save to the "data/youtube_video" folder
-1.1 Reference of this package is https://github.com/yt-dlp/yt-dlp
 
 
 

@@ -13,9 +13,9 @@ Video Properties:
 - Duration: 00:03:10 (190.78 seconds)
 
 Extraction Settings:
-- Frame Interval: 5.0 seconds
-- Frames Saved Every: 115 frames
-- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/frames_output
+- Frame Interval: 10.0 seconds
+- Frames Saved Every: 230 frames
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/frames_output_Claude_Computer_use_for_coding
 
 File Naming Convention:
 timestamp_HHMMSS_frame_XXXX_time_YYYYs.jpg
@@ -24,4 +24,4 @@ where:
 - XXXX: Frame number (zero-padded)
 - YYYY: Timestamp in seconds
 
-Processing Date: 2024-11-01 20:20:39
+Processing Date: 2024-11-01 20:52:45

@@ -61,19 +61,24 @@ def video_frame_split(video_path: str, output_dir: str = None, time_interval: fl
         output_dir: Directory to save extracted frames (if None, will create based on video name)
         time_interval: Extract frames every n seconds
     """
-    # Get video filename and create output directory name
+    # Step 1: Get video filename
     video_path = Path(video_path)
     video_name = video_path.stem  # Gets filename without extension
     
-    # If output_dir is not specified, create one based on video name
-    if not output_dir:
+    # Step 2: Determine output directory name
+    if output_dir:
+        # If custom output_dir provided, check if it starts with 'frames_'
+        prefix = '' if output_dir.startswith('frames_') else 'frames_'
+        output_dir = f'{prefix}{output_dir}_{video_name}'
+    else:
+        # If no output_dir provided, just use video name
         output_dir = f'frames_{video_name}'
     
-    # Get absolute path to the project root (parent of utility folder)
+    # Step 3: Setup output path
     project_root = Path(__file__).resolve().parent.parent
     output_path = project_root / 'data' / output_dir
     
-    # Create the output directory if it doesn't exist
+    # Step 4: Create the output directory
     output_path.mkdir(parents=True, exist_ok=True)
     
     print(f'Project root: {project_root}')
