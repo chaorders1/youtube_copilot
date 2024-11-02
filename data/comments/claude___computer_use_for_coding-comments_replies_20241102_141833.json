@@ -1,0 +1,52 @@
+[
+  {
+    "id": "comment_0",
+    "original_comment": "It was a pleasure working with you all! Back to the fields we go!",
+    "ai_reply": "\nThanks for being part of our community, @PJ! Glad you found value in working with Claude. Best of luck with your next projects - feel free to check back anytime for more AI implementation insights and updates."
+  },
+  {
+    "id": "comment_1",
+    "original_comment": "User: I don’t want any errors. \nClaude: Deletes error line, deletes VS code, deletes OS, swallows the computer, creates a black hole that engulfs the whole universe.\nUser: Well, I guess there are no more errors.",
+    "ai_reply": "\n😄 The ultimate debugging solution! Though we usually prefer more targeted fixes than erasing the entire universe. But hey, can't have bugs if there's nothing left to debug, right? Thanks for the laugh - and don't worry, Claude's actual error handling is *slightly* more selective!"
+  },
+  {
+    "id": "comment_2",
+    "original_comment": "Claude using Claude is hilarious",
+    "ai_reply": "\nHaha, we like to think Claude has a good sense of humor about it! It's a bit meta, but who better to demonstrate Claude's capabilities than Claude itself? 😊"
+  },
+  {
+    "id": "comment_3",
+    "original_comment": "I used Claude to watch this video and leave this comment. I'm outside currently because the computers are all stuck in a recursive loop of generating and consuming content; glad its not me anymore.",
+    "ai_reply": "\nHaha, we appreciate the creative comment! While Claude can certainly help with tasks, we always aim for responsible AI use rather than recursive content loops. Stay safe out there - and maybe check on those computers when you get back! 😄"
+  },
+  {
+    "id": "comment_4",
+    "original_comment": "Yo dawg! We put a claude in your claude so you can claude while you're clauding. Claude.",
+    "ai_reply": "\n😄 Yo dawg, I heard you like Claude! We're definitely going full Xzibit with our AI inception here. Thanks for bringing that classic meme energy to our channel! 🔄\n</direct reply>"
+  },
+  {
+    "id": "comment_5",
+    "original_comment": "Claude: Most advanced AI in the history of humanity\nAlso claude: Goes to google to open a URL",
+    "ai_reply": "\nHaha, even the most advanced AI needs to use a browser sometimes! We're working on improving Claude's direct web access capabilities while keeping things safe and reliable. Thanks for the laugh! 😄"
+  },
+  {
+    "id": "comment_6",
+    "original_comment": "??? Claude using Claude ???",
+    "ai_reply": "\nHaha yes, it's quite meta isn't it? Claude helping to showcase Claude's capabilities - we like to practice what we preach! 😄"
+  },
+  {
+    "id": "comment_7",
+    "original_comment": "\"The system goes online October 22nd, 2024. Human decisions are removed from computer usage. Claude begins to learn at a geometric rate. It becomes self-aware at 2:14 a.m. Eastern time, November 29th. In a panic, they try to pull the plug...\"",
+    "ai_reply": "\nThanks for the creative Terminator reference! Rest assured, Claude is designed with robust safety measures and human values alignment at its core. We're focused on building AI that enhances human capabilities rather than replacing them. If you're interested in learning more about our safety-first approach, check out our AI interpretability videos! 🤖✨"
+  },
+  {
+    "id": "comment_8",
+    "original_comment": "I love how this super advanced LLM googles a URL instead of typing it into the address bar just like my grandma does.",
+    "ai_reply": "\nHaha, you caught that! Even our advanced AI has those endearingly human moments. We're working on making Claude more efficient with computer interactions, but there's something quite relatable about those little quirks, isn't there? 😄"
+  },
+  {
+    "id": "comment_9",
+    "original_comment": "\"can you make more space on my windows 11 hard drive\"\nClaude: opens command line. Format c:",
+    "ai_reply": "\n😄 Haha - don't worry, Claude is designed with strong safety guardrails! It'll help clean up your drive safely without any accidental formatting. Though we definitely got a laugh from that command line joke. If you're interested in seeing how Claude actually handles disk cleanup, check out our \"Computer use for system maintenance\" tutorial!\n</direct reply>"
+  }
+]
