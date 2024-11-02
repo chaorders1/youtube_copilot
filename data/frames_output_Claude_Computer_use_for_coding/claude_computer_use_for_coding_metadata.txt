@@ -1,0 +1,45 @@
+YouTube Video Metadata:
+====================
+
+Video Information:
+- Title: Claude | Computer use for coding
+- Channel: Anthropic
+- Upload Date: 20241022
+- Duration: 3:03
+- View Count: 188240
+- Like Count: 5253
+- Original URL: https://www.youtube.com/watch?v=vH2f7cjXjKI
+
+Video Description:
+With the upgraded Claude 3.5 Sonnet, we’re introducing a new capability in beta: computer use. Developers can now direct Claude to use computers the way people do—by looking at a screen, moving a cursor, clicking, and typing text.
+
+While groundbreaking, computer use is still experimental—at times cumbersome and error-prone. We're releasing computer use early for feedback from developers.
+
+In this demo, Claude creates a themed website—generating code, launching a server, and fixing its own mistakes.
+
+Claude is generating all the computer actions shown here. 
+
+This demonstration was recorded in a controlled environment, with some supporting infrastructure simplified to highlight the core capabilities.
+
+Read more about Claude and computer use: https://www.anthropic.com/news/3-5-models-and-computer-use
+
+Download Settings:
+- Quality: default
+- Format: mp4
+- Subtitles: Yes
+
+Technical Details:
+- Format ID: 137+251
+- Resolution: 1920x1080
+- FPS: 24
+- Video Codec: avc1.640028
+- Audio Codec: opus
+
+Processing Information:
+- Download Date: 2024-11-01 20:56:35
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/video_claude_computer_use_for_coding
+- Filename: claude_computer_use_for_coding
+
+File Locations:
+- Video File: claude_computer_use_for_coding.mp4
+- Subtitle File: claude_computer_use_for_coding.en.vtt
