@@ -1,0 +1,24 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: anthropic_youtube_chanel
+- Original Path: /Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 1265x1611
+- Mode: RGBA
+
+Crop Settings:
+- Part Height: 800 pixels
+- Number of Parts: 3
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/crop_anthropic_youtube_chanel
+
+File Naming Convention:
+part_X_hYYYY.png
+where:
+- X: Part number
+- YYYY: Height in pixels
+
+Processing Date: 2024-11-01 23:15:56

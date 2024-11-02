@@ -1,38 +1,44 @@
-"""
-This module provides functionality to split large images into smaller parts.
+"""Image Cropping Utility
 
-The main functionality includes splitting images into multiple parts based on a specified
-height while maintaining the original width. It handles various image formats and creates
-appropriately named output files.
+This module provides functionality to crop large images into smaller parts vertically.
+It maintains the original image quality and width while dividing it into specified heights.
 
-Key features:
-- Splits images into parts of specified height
-- Maintains original image width and quality
-- Supports common image formats (JPEG, PNG, GIF, etc.)
-- Creates output directory if needed
-- Handles large images efficiently
-- Includes error handling for file operations
+Example Usage:
+    # Basic usage
+    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png"
+    
+    # Custom output and height
+    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png" crop_output 500
 
-Usage:
-    from utility.split_picture import split_picture
-    split_picture('input.jpg', 'output_dir', part_height=1024)
+Features:
+    - Crops images into parts of specified height
+    - Maintains original image width and quality
+    - Supports multiple image formats (JPEG, PNG, GIF, BMP, TIFF)
+    - Organized output directory structure
+    - Detailed part naming with dimensions
 
-Dependencies:
+Output Structure:
+    output_dir/
+    ├── metadata.txt           # Crop information and image properties
+    └── parts/
+        ├── part_1_h500.jpg   # Height indicated in filename
+        ├── part_2_h500.jpg
+        └── ...
+
+Requirements:
     - PIL (Python Imaging Library)
-    - os (standard library)
-    - argparse (standard library)
+    - Python 3.6+
 """
 
 from PIL import Image
 import os
-import argparse
+from pathlib import Path
+from datetime import datetime
 
-def get_output_format(input_file):
-    # Get the file extension (format) of the input file
-    _, ext = os.path.splitext(input_file)
-    ext = ext.lower()
-
-    # Map of common image extensions to PIL format strings
+def get_output_format(input_file: str) -> str:
+    """Get the appropriate output format based on input file extension."""
+    ext = Path(input_file).suffix.lower()
+    
     format_map = {
         '.jpg': 'JPEG',
         '.jpeg': 'JPEG',
@@ -41,60 +47,104 @@ def get_output_format(input_file):
         '.bmp': 'BMP',
         '.tiff': 'TIFF'
     }
-
-    # Return the format, defaulting to JPEG if unknown
+    
     return format_map.get(ext, 'JPEG')
 
-def split_picture(input_file, output_dir, part_height=1024):
-    # Open the input image
-    with Image.open(input_file) as img:
-        # Get the dimensions of the image
+def crop_picture(input_file: str, output_dir: str = None, part_height: int = 800) -> None:
+    """
+    Crop an image into multiple parts vertically.
+    
+    Args:
+        input_file: Path to the input image
+        output_dir: Directory to save cropped parts (if None, will create based on image name)
+        part_height: Height of each part in pixels (default: 800)
+    """
+    # Step 1: Setup paths
+    input_path = Path(input_file)
+    image_name = input_path.stem
+    
+    # Step 2: Determine output directory
+    if output_dir:
+        # If custom output_dir provided, check if it starts with 'crop_'
+        prefix = '' if output_dir.startswith('crop_') else 'crop_'
+        output_dir = f'{prefix}{output_dir}_{image_name}'
+    else:
+        output_dir = f'crop_{image_name}'
+    
+    # Step 3: Setup output path
+    project_root = Path(__file__).resolve().parent.parent
+    output_path = project_root / 'data' / output_dir
+    
+    # Step 4: Create output directory
+    output_path.mkdir(parents=True, exist_ok=True)
+    
+    print(f'Project root: {project_root}')
+    print(f'Processing image: {input_path}')
+    print(f'Parts will be saved to: {output_path}')
+    
+    # Open and process the image
+    with Image.open(input_path) as img:
         width, height = img.size
-        
-        # Calculate the number of parts
         num_parts = (height + part_height - 1) // part_height
         
-        # Create the output directory if it doesn't exist
-        os.makedirs(output_dir, exist_ok=True)
-        
-        # Get the output format
-        output_format = get_output_format(input_file)
-        
-        # Get the appropriate file extension for the output format
+        # Get output format
+        output_format = get_output_format(str(input_path))
         extension = '.jpg' if output_format == 'JPEG' else f'.{output_format.lower()}'
         
-        # Split the image into parts
+        # Create metadata file
+        metadata_path = output_path / 'metadata.txt'
+        with open(metadata_path, 'w', encoding='utf-8') as f:
+            f.write(f"Image Crop Metadata:\n")
+            f.write(f"==================\n\n")
+            f.write(f"Source Information:\n")
+            f.write(f"- Image File: {image_name}\n")
+            f.write(f"- Original Path: {input_path}\n")
+            f.write(f"- Format: {output_format}\n")
+            
+            f.write(f"\nImage Properties:\n")
+            f.write(f"- Dimensions: {width}x{height}\n")
+            f.write(f"- Mode: {img.mode}\n")
+            
+            f.write(f"\nCrop Settings:\n")
+            f.write(f"- Part Height: {part_height} pixels\n")
+            f.write(f"- Number of Parts: {num_parts}\n")
+            f.write(f"- Output Directory: {output_path}\n")
+            
+            f.write(f"\nFile Naming Convention:\n")
+            f.write(f"part_X_hYYYY{extension}\n")
+            f.write(f"where:\n")
+            f.write(f"- X: Part number\n")
+            f.write(f"- YYYY: Height in pixels\n")
+            
+            f.write(f"\nProcessing Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        
+        # Crop and save parts
         for i in range(num_parts):
             top = i * part_height
             bottom = min((i + 1) * part_height, height)
             
-            # Crop the image
             part = img.crop((0, top, width, bottom))
-            
-            # Save the part
-            output_file = os.path.join(output_dir, f"part_{i+1}{extension}")
+            output_file = output_path / f"part_{i+1}_h{part_height}{extension}"
             part.save(output_file, output_format)
-            print(f"Saved {output_file}")
+            print(f"Saved part {i+1}/{num_parts}: {output_file}")
+        
+        print(f'\nCompleted:')
+        print(f'- Parts created: {num_parts}')
+        print(f'- Output location: {output_path}')
 
-def get_project_root():
-    return os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-
-def get_absolute_path(*relative_path):
-    return os.path.join(get_project_root(), *relative_path)
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Split an image into multiple parts vertically.")
-    parser.add_argument("--input_file", default="Data/picture/test.png", help="Path to the input image file")
-    parser.add_argument("--output_dir", default="Data/split_output", help="Directory to save the split parts")
-    parser.add_argument("--part_height", type=int, default=1024, help="Height of each part in pixels (default: 1024)")
-    args = parser.parse_args()
-
-    # Convert relative paths to absolute paths
-    input_file = get_absolute_path(args.input_file)
-    output_dir = get_absolute_path(args.output_dir)
-
-    if not os.path.exists(input_file):
-        print(f"Error: Input file '{input_file}' not found.")
-        exit(1)
-
-    split_picture(input_file, output_dir, args.part_height)
+if __name__ == '__main__':
+    import sys
+    
+    if len(sys.argv) < 2:
+        print("Usage: python picture_crop.py <image_path> [output_dir] [part_height]")
+        sys.exit(1)
+    
+    image_path = sys.argv[1]
+    output_dir = sys.argv[2] if len(sys.argv) > 2 else None
+    part_height = int(sys.argv[3]) if len(sys.argv) > 3 else 800
+    
+    try:
+        crop_picture(image_path, output_dir, part_height)
+    except Exception as e:
+        print(f'Error: {e}')
+        sys.exit(1)

@@ -95,14 +95,14 @@ This is prepared for Claude day. Youtubers can use this to brainstrom their proj
    - Processing date and time
 
 
-### Youtube screenshot
+### Youtube screenshot (Difficult to get. Wait)
 1. Use pikwy to take screenshot of a given youtube video url
 2. Save the screenshot to the data folder
 
 
 ### Youtube channel persona analysis
-1. Use apify to take screenshot of youtube channel
-2. Take screenshot of youtube channel video tab (here does not find apify actor)
+1. Assume we have the screenshot of youtube channel video tab
+2. Use picture_crop.py to split the screenshot into 1024 x 1024 images
 3. use @prompt/prompt_full_analysis_102524.md to analyze the screenshot
 4. Save the analysis to the data folder as persona_analysis.md
 
