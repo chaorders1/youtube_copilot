@@ -30,7 +30,7 @@ class VideoAnalyzer:
     """Analyzes video-related files to generate insights about video popularity."""
     
     SUPPORTED_IMAGE_FORMATS = {'.jpg', '.jpeg', '.png'}
-    SUPPORTED_TEXT_FORMATS = {'.txt', '.json', '.vtt'}
+    SUPPORTED_TEXT_FORMATS = {'.txt', '.json', '.vtt', '.md'}
     
     def __init__(self, folder_path: str):
         """
@@ -137,69 +137,73 @@ class VideoAnalyzer:
     def generate_prompt(self) -> str:
         """Generate a comprehensive prompt for analysis."""
         return (
-            "You are an expert YouTube content creation advisor. Your task is to "
-            "analyze a video based on its transcript, metadata, and screenshots, "
-            "and provide a comprehensive evaluation for your client, the content "
-            "creator. You will generate an artifact in an MD file that gives your "
-            "client an evaluation of this video based on a specific framework.\n\n"
+            "You are a video content strategist specializing in analyzing viral and successful content. "
+            "Your task is to analyze the provided video information and extract 10 specific, actionable "
+            "strategies that contributed to its success.\n\n"
             
-            "Here is the video transcript:\n"
+            "Here are the video components you will analyze:\n\n"
+            
+            "[VIDEO TRANSCRIPT]\n"
             "<video_transcript>\n"
             "{{VIDEO_TRANSCRIPT}}\n"
             "</video_transcript>\n\n"
             
-            "Here is the video metadata:\n"
+            "[VIDEO METADATA]\n"
             "<video_metadata>\n"
             "{{VIDEO_METADATA}}\n"
             "</video_metadata>\n\n"
             
-            "Here are the video screenshots:\n"
+            "[VIDEO SCREENSHOTS]\n"
             "<video_screenshots>\n"
             "{{VIDEO_SCREENSHOTS}}\n"
             "</video_screenshots>\n\n"
             
-            "Analyze the provided content carefully. Use the transcript to understand "
-            "the content and linguistic style, the metadata for quantitative "
-            "information, and the screenshots for visual presentation.\n\n"
+            "Carefully review all the provided information. Your goal is to identify 10 key success "
+            "factors that contributed to the video's effectiveness. For each success factor, you will "
+            "provide a detailed analysis following this structure:\n\n"
             
-            "Create your evaluation in an MD file format. Structure your analysis "
-            "as follows:\n\n"
+            "## Success Factor #[number]: [Strategy Name]\n"
+            "- What They Did: [specific technique used]\n"
+            "- Why It Works: [psychological or strategic explanation]\n"
+            "- Example From Video: [concrete example]\n"
+            "- How To Apply: [actionable implementation tip]\n\n"
             
-            "# Video Evaluation\n\n"
+            "Consider these aspects in your analysis:\n"
+            "- Hook and opening sequence\n"
+            "- Narrative structure\n"
+            "- Audience engagement techniques\n"
+            "- Visual presentation\n"
+            "- Content pacing\n"
+            "- Emotional triggers\n"
+            "- Call-to-action effectiveness\n"
+            "- Title and thumbnail strategy\n"
+            "- Audio/voice techniques\n"
+            "- Unique differentiators\n\n"
             
-            "## Basic Metrics\n"
-            "- Type: [Determine if it's a) Personality/Entertainment Driven, "
-            "b) Professional/Educational, or c) Curated/Aggregate]\n"
-            "- Area of Interest: [Identify the main topic, e.g., Food, Travel, "
-            "Technology, Fashion, Education, Relationships, Gaming]\n"
-            "- Subculture or Niche: [Identify any specific subculture or niche]\n"
-            "- Creator Self-Label: [Provide 3-5 short phrases that the creator "
-            "might use to describe themselves]\n"
-            "- Total Views: [Extract from metadata]\n"
-            "- Total Likes: [Extract from metadata]\n"
-            "- Likes to Views Ratio: [Calculate]\n"
-            "- Creator Essence: [Summarize the creator's unique qualities or approach]\n"
-            "- Linguistic Style: [Describe, e.g., humorous, serious, warm, thoughtful]\n"
-            "- Mission / Value: [Identify the underlying purpose or value "
-            "proposition of the content]\n\n"
+            "Your insights should be:\n"
+            "- Specific and actionable (not generic advice)\n"
+            "- Supported by evidence from the video\n"
+            "- Applicable to other content creators\n"
+            "- Focused on replicable techniques\n\n"
             
-            "## Content Quality Analysis\n"
-            "- Clarity: [Evaluate how clear and understandable the content is]\n"
-            "- Approachability / Authenticity: [Assess how approachable and "
-            "authentic the creator appears]\n"
-            "- Approach to Topic: [Analyze how the creator tackles the subject matter]\n"
-            "- Audience Alignment: [Evaluate how well the content aligns with "
-            "the likely target audience]\n"
-            "- Presentation Style: [Describe the overall presentation style "
-            "and effectiveness]\n\n"
+            "After identifying and analyzing the 10 success factors, conclude with a brief summary "
+            "of the most essential success factor that other creators should prioritize implementing first.\n\n"
             
-            "For each section, provide a brief explanation or justification for "
-            "your evaluation. Use specific examples from the transcript, metadata, "
-            "or screenshots to support your points.\n\n"
+            "Format your entire response as follows:\n\n"
             
-            "When you've completed your analysis, present the entire evaluation "
-            "within <md_file> tags. Ensure that your markdown formatting is "
-            "correct and consistent throughout the document."
+            "<analysis>\n"
+            "# Top 10 Success Factors Analysis\n\n"
+            
+            "[Insert your 10 success factors here, formatted as specified above]\n\n"
+            
+            "# Conclusion\n\n"
+            
+            "[Insert your brief conclusion here, highlighting the most essential success factor]\n"
+            "</analysis>\n\n"
+            
+            "Remember to base all your insights on the provided video transcript, metadata, and "
+            "screenshot descriptions. Do not make assumptions about content that isn't explicitly "
+            "mentioned in the provided information."
         )
 
     def generate_analysis(self, output_path: Optional[str] = None) -> str:
