@@ -248,8 +248,8 @@ Present your analysis in a single, cohesive markdown document. Begin with the su
             logger.info("Sending request to Claude API...")
             response = self.client.messages.create(
                 model="claude-3-5-sonnet-20241022",
-                max_tokens=4000,
-                temperature=0.2,
+                max_tokens=5000,
+                temperature=0.3,
                 messages=[{
                     'role': 'user',
                     'content': message_content
