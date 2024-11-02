@@ -95,6 +95,10 @@ This is prepared for Claude day. Youtubers can use this to brainstrom their proj
    - Processing date and time
 
 
+### Youtube screenshot
+1. Use pikwy to take screenshot of a given youtube video url
+2. Save the screenshot to the data folder
+
 
 ### Youtube channel persona analysis
 1. Use apify to take screenshot of youtube channel
