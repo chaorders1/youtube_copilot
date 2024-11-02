@@ -12,13 +12,16 @@ Image Properties:
 
 Crop Settings:
 - Part Height: 800 pixels
+- Overlap: 200 pixels
 - Number of Parts: 3
 - Output Directory: /Users/yuanlu/Code/youtube_copilot/data/crop_anthropic_youtube_chanel
 
 File Naming Convention:
-part_X_hYYYY.png
+original_name_part_X_h800_overlap200.png
 where:
+- original_name: Name of the source image
 - X: Part number
-- YYYY: Height in pixels
+- h800: Height of each part
+- overlap200: Overlap between parts
 
-Processing Date: 2024-11-01 23:15:56
+Processing Date: 2024-11-01 23:24:42
