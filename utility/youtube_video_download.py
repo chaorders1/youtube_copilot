@@ -1,40 +1,52 @@
-"""
-YouTube Video Downloader Utility
-===============================
+"""YouTube Video Downloader Utility
 
-A simple utility to download YouTube videos using yt-dlp library.
-Videos are downloaded in MP4 format to the '../data/youtube_video' directory.
+This module provides functionality to download YouTube videos using yt-dlp library.
+It saves videos and optional subtitles to a specified output directory.
 
-Prerequisites:
--------------
-- Python 3.6+
-- yt-dlp library (install using: pip install yt-dlp)
+Example Usage:
+    # Basic usage - download video in default MP4 format
+    video_download('https://www.youtube.com/watch?v=ODaHJzOyVCQ')
+    
+    # Download with specific quality and custom output
+    video_download('https://www.youtube.com/watch?v=ODaHJzOyVCQ', 
+                  quality='720p',
+                  output_dir='my_videos')
+    
+    # Command line usage:
+    # Download video in MP4 format:
+    # python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ'
+    
+    # Download audio only:
+    # python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' format='audio'
+    
+    # Download with English subtitles:
+    # python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' subtitles='en'
 
-Usage Examples:
--------------
-1. Download video in default format (MP4):
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ'
+Features:
+    - Downloads videos in various formats (MP4, WebM, audio-only)
+    - Supports multiple quality options (4K, 1080p, 720p, etc.)
+    - Optional subtitle download in multiple languages
+    - Progress tracking during download
+    - Organized output directory structure
+    - Detailed logging of download process
 
-2. Download with specific quality:
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' quality='best'
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' quality='720p'
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' quality='worst'
+Output Structure:
+    data/youtube_video/
+    ├── video_title.mp4           # Downloaded video file
+    ├── video_title.en.vtt        # English subtitles (if requested)
+    ├── video_title.es.vtt        # Spanish subtitles (if requested)
+    └── video_title.mp3           # Audio-only file (if audio format selected)
 
-3. Download audio only:
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' format='audio'
+Requirements:
+    - Python 3.6+
+    - yt-dlp library (pip install yt-dlp)
 
-4. Download with subtitles:
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' subtitles='true'
-
-5. Download specific format:
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' format='mp4'
-    python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' format='webm'
-
-Available Options:
-----------------
-- quality: 'best', '4k', '1080p', '720p', '480p', '360p', 'worst'
-- format: 'video' (default), 'audio', 'mp4', 'webm'
-- subtitles: 'true' or 'false'
+Notes:
+    - Videos are saved to 'data/youtube_video' by default
+    - Supports both video and audio-only downloads
+    - Quality options: 'best', '4k', '1080p', '720p', '480p', '360p', 'worst'
+    - Format options: 'video', 'audio', 'mp4', 'webm'
+    - Subtitle options: 'en', 'es', 'fr', 'de', etc. (ISO 639-1 codes)
 """
 
 import os

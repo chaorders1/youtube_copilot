@@ -1,3 +1,45 @@
+"""Video Frame Extraction Utility
+
+This module provides functionality to extract frames from video files at specified intervals.
+It saves the frames as JPEG images and generates detailed metadata about the extraction process.
+
+Example Usage:
+    # Basic usage - extract every frame
+    video_frame_split('path/to/video.mp4')
+    
+    # Extract frames every 10 seconds with custom output directory
+    video_frame_split('path/to/video.mp4', output_dir='my_frames', time_interval=10.0)
+    
+    # Command line usage:
+    # python video_frame_split.py video.mp4
+    # python video_frame_split.py video.mp4 output_directory 5.0
+
+Features:
+    - Extracts frames at specified time intervals
+    - Generates comprehensive metadata file
+    - Supports various video formats (MP4, AVI, MOV, etc.)
+    - Progress tracking during extraction
+    - Organized output directory structure
+    - Detailed timestamp and frame information in filenames
+
+Output Structure:
+    output_dir/
+    ├── metadata.txt                      # Extraction metadata and video information
+    └── frames/
+        ├── timestamp_000000_frame_0000_time_0.0s.jpg
+        ├── timestamp_000010_frame_0300_time_10.0s.jpg
+        └── ...
+
+Requirements:
+    - OpenCV (cv2)
+    - Python 3.6+
+
+Notes:
+    - Frame filenames include timestamp and frame number for easy reference
+    - Metadata includes video properties, extraction settings, and processing details
+    - Output directory is created automatically if it doesn't exist
+"""
+
 import cv2
 import os
 from pathlib import Path
