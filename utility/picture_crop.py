@@ -6,6 +6,7 @@ It maintains the original image quality and width while dividing it into specifi
 Example Usage:
     # Basic usage with default height (800px) and overlap (200px)
     python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png"
+    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_video.png"
     
     # With custom output directory
     python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png" custom_output
