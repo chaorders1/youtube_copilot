@@ -6,6 +6,7 @@ This script analyzes video-related files (metadata, comments, subtitles, frames)
 to generate insights about video popularity on YouTube.
 
 python video_learn.py "/Users/yuanlu/Code/youtube_copilot/data/frames_output_Two_GPT-4os_interacting_and_singing"
+python video_learn.py "/Users/yuanlu/Code/youtube_copilot/data/frames_output_Claude_Computer_use_for_coding"
 """
 
 import argparse
@@ -74,75 +75,140 @@ class VideoAnalyzer:
             logger.error(f"Error encoding image {image_path}: {str(e)}")
             raise
 
-    def _process_files(self) -> Tuple[List[Dict], str]:
-        """
-        Process all supported files in the folder.
+    def _parse_text_file(self, file_path: Path) -> str:
+        """Parse different types of text files appropriately."""
+        suffix = file_path.suffix.lower()
+        try:
+            if suffix == '.json':
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = json.load(f)
+                    return f"\n=== {file_path.name} ===\n{json.dumps(content, indent=2)}\n"
+            
+            elif suffix == '.vtt':
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    # Clean up VTT formatting
+                    lines = [line for line in content.split('\n') 
+                            if not line.strip().isdigit() and 
+                            not '-->' in line and 
+                            line.strip()]
+                    return f"\n=== Transcript from {file_path.name} ===\n{''.join(lines)}\n"
+            
+            elif suffix == '.txt':
+                with open(file_path, 'r', encoding='utf-8') as f:
+                    content = f.read()
+                    if 'metadata' in file_path.name.lower():
+                        # Parse metadata-style text files
+                        metadata = {}
+                        for line in content.split('\n'):
+                            if ':' in line:
+                                key, value = line.split(':', 1)
+                                metadata[key.strip()] = value.strip()
+                        return f"\n=== Metadata from {file_path.name} ===\n{json.dumps(metadata, indent=2)}\n"
+                    return f"\n=== Content from {file_path.name} ===\n{content}\n"
+                
+        except Exception as e:
+            logger.error(f"Error parsing {file_path}: {str(e)}")
+            return f"\n=== Error parsing {file_path.name} ===\n"
 
-        Returns:
-            Tuple[List[Dict], str]: Tuple of (image contents, text contents)
-        """
+    def _process_files(self) -> Tuple[List[Dict], str]:
+        """Process all supported files in the folder and subfolders."""
         image_contents = []
         text_contents = []
 
-        for file_path in self.folder_path.iterdir():
-            suffix = file_path.suffix.lower()
-            
-            if suffix in self.SUPPORTED_IMAGE_FORMATS:
-                logger.info(f"Processing image: {file_path.name}")
-                image_contents.append(self._encode_image(file_path))
-            
-            elif suffix in self.SUPPORTED_TEXT_FORMATS:
-                logger.info(f"Processing text file: {file_path.name}")
-                with open(file_path, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                    text_contents.append(f"\n=== Content from {file_path.name} ===\n{content}\n")
+        # Process files recursively
+        for file_path in Path(self.folder_path).rglob('*'):
+            if file_path.is_file():
+                suffix = file_path.suffix.lower()
+                
+                if suffix in self.SUPPORTED_IMAGE_FORMATS:
+                    logger.info(f"Processing image: {file_path.name}")
+                    try:
+                        image_contents.append(self._encode_image(file_path))
+                    except Exception as e:
+                        logger.error(f"Failed to process image {file_path}: {str(e)}")
+                
+                elif suffix in self.SUPPORTED_TEXT_FORMATS:
+                    logger.info(f"Processing text file: {file_path.name}")
+                    text_contents.append(self._parse_text_file(file_path))
 
         return image_contents, '\n'.join(text_contents)
 
     def generate_prompt(self) -> str:
         """Generate a comprehensive prompt for analysis."""
-        return """You are an expert YouTube content analyst. Your task is to analyze the provided video content and explain why it's popular.
-
-Please examine all the provided images (video frames) and text content (metadata, comments, subtitles) to generate a comprehensive analysis.
-
-Your analysis should cover:
-
-1. Content Overview
-   - Video topic and main message
-   - Production quality assessment
-   - Storytelling and pacing analysis
-
-2. Audience Engagement Analysis
-   - Comment sentiment and patterns
-   - Viewer reactions and engagement indicators
-   - Community interaction quality
-
-3. Success Factors
-   - Key elements contributing to popularity
-   - Unique selling points
-   - Content hooks and retention strategies
-
-4. Technical Analysis
-   - Title and thumbnail effectiveness
-   - SEO and discoverability factors
-   - Video length and pacing optimization
-
-5. Recommendations
-   - Areas for improvement
-   - Content strategy suggestions
-   - Growth opportunities
-
-Please format your response in markdown with clear sections, bullet points, and specific examples from the provided content.
-"""
+        return (
+            "You are an expert YouTube content creation advisor. Your task is to "
+            "analyze a video based on its transcript, metadata, and screenshots, "
+            "and provide a comprehensive evaluation for your client, the content "
+            "creator. You will generate an artifact in an MD file that gives your "
+            "client an evaluation of this video based on a specific framework.\n\n"
+            
+            "Here is the video transcript:\n"
+            "<video_transcript>\n"
+            "{{VIDEO_TRANSCRIPT}}\n"
+            "</video_transcript>\n\n"
+            
+            "Here is the video metadata:\n"
+            "<video_metadata>\n"
+            "{{VIDEO_METADATA}}\n"
+            "</video_metadata>\n\n"
+            
+            "Here are the video screenshots:\n"
+            "<video_screenshots>\n"
+            "{{VIDEO_SCREENSHOTS}}\n"
+            "</video_screenshots>\n\n"
+            
+            "Analyze the provided content carefully. Use the transcript to understand "
+            "the content and linguistic style, the metadata for quantitative "
+            "information, and the screenshots for visual presentation.\n\n"
+            
+            "Create your evaluation in an MD file format. Structure your analysis "
+            "as follows:\n\n"
+            
+            "# Video Evaluation\n\n"
+            
+            "## Basic Metrics\n"
+            "- Type: [Determine if it's a) Personality/Entertainment Driven, "
+            "b) Professional/Educational, or c) Curated/Aggregate]\n"
+            "- Area of Interest: [Identify the main topic, e.g., Food, Travel, "
+            "Technology, Fashion, Education, Relationships, Gaming]\n"
+            "- Subculture or Niche: [Identify any specific subculture or niche]\n"
+            "- Creator Self-Label: [Provide 3-5 short phrases that the creator "
+            "might use to describe themselves]\n"
+            "- Total Views: [Extract from metadata]\n"
+            "- Total Likes: [Extract from metadata]\n"
+            "- Likes to Views Ratio: [Calculate]\n"
+            "- Creator Essence: [Summarize the creator's unique qualities or approach]\n"
+            "- Linguistic Style: [Describe, e.g., humorous, serious, warm, thoughtful]\n"
+            "- Mission / Value: [Identify the underlying purpose or value "
+            "proposition of the content]\n\n"
+            
+            "## Content Quality Analysis\n"
+            "- Clarity: [Evaluate how clear and understandable the content is]\n"
+            "- Approachability / Authenticity: [Assess how approachable and "
+            "authentic the creator appears]\n"
+            "- Approach to Topic: [Analyze how the creator tackles the subject matter]\n"
+            "- Audience Alignment: [Evaluate how well the content aligns with "
+            "the likely target audience]\n"
+            "- Presentation Style: [Describe the overall presentation style "
+            "and effectiveness]\n\n"
+            
+            "For each section, provide a brief explanation or justification for "
+            "your evaluation. Use specific examples from the transcript, metadata, "
+            "or screenshots to support your points.\n\n"
+            
+            "When you've completed your analysis, present the entire evaluation "
+            "within <md_file> tags. Ensure that your markdown formatting is "
+            "correct and consistent throughout the document."
+        )
 
     def generate_analysis(self, output_path: Optional[str] = None) -> str:
-        """
-        Generate analysis and save it as a markdown file using Claude API.
-        
+        """Generate analysis and save it as a markdown file using Claude API.
+
         Args:
             output_path: Optional path for the output file. If not provided,
-                        will create in the same folder as input.
-        
+                will create in the same folder as input.
+
         Returns:
             Path to the generated markdown file
         """
