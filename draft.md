@@ -25,6 +25,7 @@ This is prepared for Claude day. Youtubers can use this to brainstrom their proj
    # Download with English subtitles
    python youtube_video_download.py url='https://www.youtube.com/watch?v=VIDEO_ID' subtitles='en'
    ```
+   
 
 3. Output Structure:
    ```
@@ -122,6 +123,11 @@ This is prepared for Claude day. Youtubers can use this to brainstrom their proj
 1. You will be given a youtube video url
 2. Use chrome icognito mode and open the youtube video url
 
+
+### Competitor video analysis
+1. You will be given a youtube video url
+2. Use chrome icognito mode and open the youtube video url
+3. Get the related videos from the youtube video
 
 
 ** # Doc **

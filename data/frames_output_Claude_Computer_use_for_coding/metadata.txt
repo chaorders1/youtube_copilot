@@ -3,7 +3,7 @@ Video Metadata:
 
 Source Information:
 - Video File: Claude_Computer_use_for_coding
-- Original Path: /Users/yuanlu/Code/youtube_copilot/data/youtube_video/Claude_Computer_use_for_coding.mp4
+- Original Path: /Users/yuanlu/Code/youtube_copilot/data/video_claude_computer_use_for_coding/Claude_Computer_use_for_coding.mp4
 - Codec: h264
 
 Video Properties:
@@ -13,8 +13,8 @@ Video Properties:
 - Duration: 00:03:10 (190.78 seconds)
 
 Extraction Settings:
-- Frame Interval: 10.0 seconds
-- Frames Saved Every: 230 frames
+- Frame Interval: 5.0 seconds
+- Frames Saved Every: 115 frames
 - Output Directory: /Users/yuanlu/Code/youtube_copilot/data/frames_output_Claude_Computer_use_for_coding
 
 File Naming Convention:
@@ -24,4 +24,4 @@ where:
 - XXXX: Frame number (zero-padded)
 - YYYY: Timestamp in seconds
 
-Processing Date: 2024-11-01 20:52:45
+Processing Date: 2024-11-02 12:51:03

@@ -12,7 +12,8 @@ Example Usage:
     
     # Command line usage:
     # python video_frame_split.py "/Users/yuanlu/Code/youtube_copilot/data/youtube_video/video.mp4"
-    # python video_frame_split.py "/Users/yuanlu/Code/youtube_copilot/data/youtube_video/Claude_Computer_use_for_coding.mp4" frames_output 5.0
+    # python video_frame_split.py "/Users/yuanlu/Code/youtube_copilot/data/video_two_gpt-4os_interacting_and_singing/Two_GPT-4os_interacting_and_singing.mp4" frames_output 5.0
+    # python video_frame_split.py "/Users/yuanlu/Code/youtube_copilot/data/video_claude_computer_use_for_coding/Claude_Computer_use_for_coding.mp4" frames_output 5.0
 
 Features:
     - Extracts frames at specified time intervals
