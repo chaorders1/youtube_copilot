@@ -1,0 +1,226 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.291 --> 00:00:03.420
+I'm Alex, I lead developer
+relations at Anthropic,
+
+00:00:03.420 --> 00:00:05.839
+and today I'm gonna be
+showing you a coding task
+
+00:00:05.839 --> 00:00:06.923
+with computer use.
+
+00:00:14.222 --> 00:00:17.475
+So we're gonna be showing Claude
+doing a website coding task
+
+00:00:17.475 --> 00:00:19.769
+by actually controlling my laptop.
+
+00:00:19.769 --> 00:00:21.021
+But before we start coding,
+
+00:00:21.021 --> 00:00:24.274
+we need an actual website for
+Claude to make changes to.
+
+00:00:24.274 --> 00:00:27.527
+So, let's ask Claude to
+navigate to claude.ai
+
+00:00:27.527 --> 00:00:29.112
+within my Chrome browser,
+
+00:00:29.112 --> 00:00:31.573
+and ask Claude within claude.ai
+
+00:00:31.573 --> 00:00:34.909
+to create a fun, 90s themed
+personal homepage for itself.
+
+00:00:37.912 --> 00:00:39.122
+Claude opens Chrome,
+
+00:00:41.624 --> 00:00:43.043
+searches for claude.ai,
+
+00:00:46.671 --> 00:00:49.674
+and then types in a prompt
+asking the other Claude
+
+00:00:49.674 --> 00:00:51.718
+to create a personal homepage for itself.
+
+00:00:58.850 --> 00:01:00.685
+Claude.ai returns some code,
+
+00:01:04.439 --> 00:01:05.899
+and that gets nicely rendered
+
+00:01:05.899 --> 00:01:08.234
+in an Artifact on the right-hand side.
+
+00:01:08.234 --> 00:01:09.194
+That looks great,
+
+00:01:09.194 --> 00:01:11.780
+but I want to make a few
+changes to the website locally
+
+00:01:11.780 --> 00:01:12.947
+on my own computer.
+
+00:01:12.947 --> 00:01:15.283
+Let's ask Claude to download the file
+
+00:01:15.283 --> 00:01:17.243
+and then open it up in VS Code.
+
+00:01:18.870 --> 00:01:21.081
+Claude clicks the save to file button,
+
+00:01:22.874 --> 00:01:24.209
+opens up VS Code,
+
+00:01:26.836 --> 00:01:29.798
+and then finds the file
+within my Downloads folder
+
+00:01:29.798 --> 00:01:30.632
+and opens it up.
+
+00:01:34.094 --> 00:01:34.928
+Perfect.
+
+00:01:34.928 --> 00:01:36.179
+Now that the file's up and running,
+
+00:01:36.179 --> 00:01:38.389
+let's ask Claude to start up a server
+
+00:01:38.389 --> 00:01:41.267
+so that we can actually view
+the file within our browser.
+
+00:01:45.522 --> 00:01:48.733
+Claude opens up the VS Code terminal
+
+00:01:48.733 --> 00:01:50.193
+and tries to start a server.
+
+00:01:53.446 --> 00:01:54.531
+But it hits an error,
+
+00:01:54.531 --> 00:01:57.075
+we don't actually have Python
+installed on our machine.
+
+00:01:57.075 --> 00:01:57.909
+But that's all right,
+
+00:01:57.909 --> 00:01:59.327
+because Claude realizes this
+
+00:01:59.327 --> 00:02:00.954
+by looking at the terminal output,
+
+00:02:00.954 --> 00:02:02.997
+and then tries again with Python 3,
+
+00:02:02.997 --> 00:02:05.041
+which we do have installed on our machine.
+
+00:02:05.041 --> 00:02:07.544
+That works, so now the
+server's up and running.
+
+00:02:07.544 --> 00:02:09.045
+Now that we have the local server started,
+
+00:02:09.045 --> 00:02:11.131
+we can go manually take
+a look at the website
+
+00:02:11.131 --> 00:02:12.507
+within the browser,
+
+00:02:12.507 --> 00:02:13.550
+and it looks pretty good,
+
+00:02:13.550 --> 00:02:15.468
+but I notice that
+there's actually an error
+
+00:02:15.468 --> 00:02:16.469
+in the terminal output,
+
+00:02:16.469 --> 00:02:19.472
+and we also have this missing
+file icon at the top here.
+
+00:02:19.472 --> 00:02:22.225
+Let's ask Claude to identify this error
+
+00:02:22.225 --> 00:02:24.144
+and then fix it within the file.
+
+00:02:24.144 --> 00:02:26.604
+Claude visually reads the terminal output
+
+00:02:26.604 --> 00:02:29.816
+and opens up the find and
+replace tool in VS Code
+
+00:02:29.816 --> 00:02:32.861
+to find the line that's
+throwing the actual error.
+
+00:02:32.861 --> 00:02:33.695
+In this case,
+
+00:02:33.695 --> 00:02:35.655
+we just ask Claude to get
+rid of the error entirely,
+
+00:02:35.655 --> 00:02:37.824
+so it will just delete the whole line.
+
+00:02:37.824 --> 00:02:39.659
+Then, Claude will save the file
+
+00:02:39.659 --> 00:02:42.203
+and automatically rerun the website.
+
+00:02:42.203 --> 00:02:43.663
+So now that the error is gone,
+
+00:02:43.663 --> 00:02:45.748
+let's go take a final look at our website,
+
+00:02:45.748 --> 00:02:48.585
+and we can see that the
+file icon has disappeared
+
+00:02:48.585 --> 00:02:51.171
+and the error is gone as well.
+
+00:02:51.171 --> 00:02:52.005
+Perfect.
+
+00:02:52.005 --> 00:02:54.174
+So that's coding with
+computer use and Claude.
+
+00:02:54.174 --> 00:02:55.633
+This took a few prompts now,
+
+00:02:55.633 --> 00:02:56.926
+but we can imagine in the future
+
+00:02:56.926 --> 00:02:59.262
+that Claude will be able to
+do tasks like this end to end.
+

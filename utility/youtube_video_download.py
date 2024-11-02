@@ -20,7 +20,7 @@ Example Usage:
     # python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' format='audio'
     
     # Download with English subtitles:
-    # python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' subtitles='en'
+    # python youtube_video_download.py url='https://www.youtube.com/watch?v=vH2f7cjXjKI' subtitles='en'
 
 Features:
     - Downloads videos in various formats (MP4, WebM, audio-only)
@@ -54,6 +54,7 @@ import sys
 from pathlib import Path
 import logging
 import yt_dlp
+import re
 
 # Configure logging
 logging.basicConfig(
@@ -65,17 +66,67 @@ logger = logging.getLogger(__name__)
 class YouTubeDownloader:
     """A class to handle YouTube video downloads using yt-dlp."""
 
+    @staticmethod
+    def sanitize_filename(title: str) -> str:
+        """
+        Sanitize the video title to create a safe filename.
+        
+        Args:
+            title: The original video title
+            
+        Returns:
+            A sanitized filename with only alphanumeric characters and underscores
+        """
+        # Remove any characters that aren't alphanumeric, spaces, or safe special chars
+        safe_chars = re.sub(r'[^a-zA-Z0-9\s\-_]', '', title)
+        
+        # Replace multiple spaces with single space and strip
+        safe_chars = ' '.join(safe_chars.split())
+        
+        # Replace spaces with underscores
+        safe_chars = safe_chars.replace(' ', '_')
+        
+        # Ensure the filename isn't empty
+        if not safe_chars:
+            safe_chars = 'untitled_video'
+            
+        # Limit filename length (optional, adjust as needed)
+        max_length = 100
+        if len(safe_chars) > max_length:
+            safe_chars = safe_chars[:max_length]
+            
+        return safe_chars.lower()
+
     def __init__(self, output_path: str = '../data/youtube_video'):
         """Initialize the YouTube downloader."""
         self.output_path = output_path
         Path(output_path).mkdir(parents=True, exist_ok=True)
         
-        # Default options
+        # Update default options to use sanitized filename
         self.ydl_opts = {
             'format': 'mp4',
-            'outtmpl': os.path.join(output_path, '%(title)s.%(ext)s'),
+            'outtmpl': os.path.join(
+                output_path, 
+                '%(title)s.%(ext)s'
+            ),
             'noplaylist': True,
+            # Add custom filename sanitization
+            'restrictfilenames': True,  # Tell yt-dlp to be conservative with filenames
+            'force_filename_sanitization': True,
+            'postprocessor_hooks': [self._sanitize_output_filename],
         }
+
+    def _sanitize_output_filename(self, d):
+        """Post-processor hook to sanitize the output filename."""
+        if 'filepath' in d:
+            path = Path(d['filepath'])
+            new_name = self.sanitize_filename(path.stem) + path.suffix
+            new_path = path.parent / new_name
+            try:
+                path.rename(new_path)
+                d['filepath'] = str(new_path)
+            except Exception as e:
+                logger.warning(f'Failed to rename file: {e}')
 
     def _get_format_options(self, quality=None, format_type=None, subtitles=False):
         """Configure download options based on user preferences."""
@@ -100,7 +151,12 @@ class YouTubeDownloader:
             self.ydl_opts.update({
                 'writesubtitles': True,
                 'writeautomaticsub': True,
-                'subtitlesformat': 'srt',
+                'subtitleslangs': ['en'],
+                'subtitlesformat': 'vtt',
+                'postprocessors': [{
+                    'key': 'FFmpegSubtitlesConvertor',
+                    'format': 'vtt'
+                }]
             })
 
     def download_video(self, url: str, quality=None, format_type=None, subtitles=False) -> bool:
@@ -138,7 +194,7 @@ def main():
     args = parse_args(sys.argv[1:])
     
     if 'url' not in args:
-        print("Usage: python youtube_video_download.py url='YOUR_YOUTUBE_URL' [quality='720p'] [format='audio'] [subtitles='true']")
+        print("Usage: python youtube_video_download.py url='YOUR_YOUTUBE_URL' [quality='720p'] [format='audio'] [subtitles='en']")
         return
 
     downloader = YouTubeDownloader()
@@ -147,7 +203,7 @@ def main():
     # Parse optional arguments
     quality = args.get('quality')
     format_type = args.get('format')
-    subtitles = args.get('subtitles', '').lower() == 'true'
+    subtitles = bool(args.get('subtitles'))
     
     if downloader.download_video(url, quality, format_type, subtitles):
         print('Video downloaded successfully!')
