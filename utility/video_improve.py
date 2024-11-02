@@ -196,7 +196,7 @@ class VideoImprover:
             " - Expected Impact: [why this improvement matters]\n\n"
 
             "## Title Improvement Advice\n"
-            "[Provide 3 topic & title ideas for future videos]\n"
+            "[Provide 3 topic and title ideas to improve the current video title]\n"
             "</analysis_structure>\n\n"
 
             "For the \"Comments from Viewers Analysis\" section:\n"
@@ -205,14 +205,14 @@ class VideoImprover:
             "- Highlight areas where the new video could improve based on viewer feedback\n\n"
 
             "For the \"Priority Improvements\" section:\n"
-            "- Identify at least 3 key areas where the new video can improve\n"
+            "- Identify 3 key areas where the new video can improve\n"
             "- For each area, clearly state the current approach in the new video and the "
             "successful strategy from the baseline video\n"
             "- Provide 3 specific, actionable suggestions for improvement\n"
             "- Explain the expected impact of each improvement\n\n"
 
             "For the \"Title Improvement Advice\" section:\n"
-            "- Provide 3 topic and title ideas for future videos\n"
+            "- Provide 3 topic and title ideas to improve the current video title\n"
             "- Focus on key elements of how the benchmark appealed to its audience\n"
             "- For each idea, include a brief explanation based on the criteria of "
             "authenticity, relatability, and engagement\n"
