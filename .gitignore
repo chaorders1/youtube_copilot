@@ -73,3 +73,17 @@ wheels/
 # Logs
 *.log
 logs/ 
+
+# Audio/Video files
+*.mp3
+*.mp4
+*.wav
+*.avi
+*.mov
+*.mkv
+*.flv
+*.webm
+*.m4a
+*.ogg
+*.opus
+*.aac

@@ -1,0 +1,151 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.250 --> 00:00:02.293
+So I'm Sam, and I'm one of the researchers
+
+00:00:02.293 --> 00:00:03.420
+here at Anthropic.
+
+00:00:03.420 --> 00:00:05.797
+Computer use is something that we felt
+
+00:00:05.797 --> 00:00:07.215
+was gonna be important for a while now.
+
+00:00:07.215 --> 00:00:08.508
+And so, today we're gonna be talking about
+
+00:00:08.508 --> 00:00:10.552
+a very early version we
+have of computer use.
+
+00:00:10.552 --> 00:00:12.595
+And walking through a
+representative example
+
+00:00:12.595 --> 00:00:14.431
+of the things we think
+it's gonna be useful for.
+
+00:00:20.812 --> 00:00:24.649
+We're gonna be going
+through a quick demo today.
+
+00:00:24.649 --> 00:00:26.901
+In this fictional demo, a customer,
+
+00:00:26.901 --> 00:00:28.653
+in this case, the Ant Equipment Company,
+
+00:00:28.653 --> 00:00:30.447
+has come to us and asked us
+
+00:00:30.447 --> 00:00:32.532
+to fill out a vendor request form.
+
+00:00:32.532 --> 00:00:35.785
+The data I need to fill
+out this form is scattered
+
+00:00:35.785 --> 00:00:37.620
+in various places on my computer.
+
+00:00:37.620 --> 00:00:41.207
+What we're gonna do is ask
+Claude to look at a spreadsheet,
+
+00:00:41.207 --> 00:00:43.460
+check if Ant Equipment is in there.
+
+00:00:43.460 --> 00:00:45.295
+And if not, move over to the CRM
+
+00:00:45.295 --> 00:00:47.380
+and try and find some
+more information there.
+
+00:00:47.380 --> 00:00:49.674
+Once it has this data,
+Claude's gonna then fill out
+
+00:00:49.674 --> 00:00:52.761
+the form for us, and hopefully
+transfer the information
+
+00:00:52.761 --> 00:00:54.929
+across to the vendor form.
+
+00:00:54.929 --> 00:00:55.972
+The first thing that's gonna happen
+
+00:00:55.972 --> 00:00:58.141
+is Claude's gonna start taking
+screenshots of my screen,
+
+00:00:58.141 --> 00:01:00.643
+and quickly realizes that
+the Ant Equipment Company
+
+00:01:00.643 --> 00:01:02.395
+isn't actually in the spreadsheet.
+
+00:01:02.395 --> 00:01:04.731
+So the first thing it does
+is it swaps over to a CRM
+
+00:01:04.731 --> 00:01:07.150
+and searches for the
+company we're interested in.
+
+00:01:18.536 --> 00:01:19.954
+Luckily, we get a search match.
+
+00:01:19.954 --> 00:01:22.457
+And Claude then starts
+scrolling through the page,
+
+00:01:22.457 --> 00:01:23.666
+looking for all the information it needs
+
+00:01:23.666 --> 00:01:24.751
+to fill out this form.
+
+00:01:31.716 --> 00:01:33.551
+Claude then autonomously
+starts transferring
+
+00:01:33.551 --> 00:01:36.054
+the information across without
+me having to do anything.
+
+00:01:39.390 --> 00:01:41.267
+And goes through the steps,
+
+00:01:41.267 --> 00:01:43.353
+and fills out all the information needed.
+
+00:01:47.607 --> 00:01:49.567
+And then submits the form.
+
+00:01:49.567 --> 00:01:52.654
+This example is representative
+of a lot of drudge work
+
+00:01:52.654 --> 00:01:53.780
+that people have to do.
+
+00:01:53.780 --> 00:01:55.240
+This is available in the API.
+
+00:01:55.240 --> 00:01:56.574
+We're excited for people to try it,
+
+00:01:56.574 --> 00:01:58.827
+and we should expect
+things to get a lot better
+
+00:01:58.827 --> 00:01:59.869
+over the coming months.
+
