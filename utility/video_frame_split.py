@@ -2,6 +2,13 @@ import cv2
 import os
 from pathlib import Path
 
+def format_timestamp(seconds: float) -> str:
+    """Convert seconds to HH:MM:SS format"""
+    hours = int(seconds // 3600)
+    minutes = int((seconds % 3600) // 60)
+    secs = int(seconds % 60)
+    return f"{hours:02d}:{minutes:02d}:{secs:02d}"
+
 def video_frame_split(video_path: str, output_dir: str = None, time_interval: float = None) -> None:
     """
     Extract frames from a video file and save them as images.
@@ -39,17 +46,22 @@ def video_frame_split(video_path: str, output_dir: str = None, time_interval: fl
     # Get video properties
     frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
     fps = int(video.get(cv2.CAP_PROP_FPS))
+    duration = frame_count / fps  # Total duration in seconds
     
-    # If time_interval is set, calculate the frame_interval
-    if time_interval is not None:
-        frame_interval = int(fps * time_interval)
-    else:
-        frame_interval = 1
+    # Calculate frame interval based on time_interval
+    frame_interval = int(time_interval * fps) if time_interval else 1
     
-    print(f'Video properties:')
-    print(f'- Total frames: {frame_count}')
-    print(f'- FPS: {fps}')
-    print(f'- Frame interval: {frame_interval} frames')
+    # Create metadata file
+    metadata_path = output_path / 'metadata.txt'
+    with open(metadata_path, 'w', encoding='utf-8') as f:
+        f.write(f"Video: {video_name}\n")
+        f.write(f"FPS: {fps}\n")
+        f.write(f"Total Frames: {frame_count}\n")
+        f.write(f"Duration: {format_timestamp(duration)}\n")
+        f.write(f"Frame Interval: {time_interval if time_interval else '1/fps'} seconds\n")
+        f.write("\nFrame naming format:\n")
+        f.write("timestamp_HHMMSS_frame_XXXX_time_YYYYs.jpg\n")
+        f.write("where XXXX is the frame number and YYYY is the timestamp in seconds\n")
     
     frame_number = 0
     saved_count = 0
@@ -61,7 +73,18 @@ def video_frame_split(video_path: str, output_dir: str = None, time_interval: fl
             break
             
         if frame_number % frame_interval == 0:
-            frame_path = output_path / f'frame_{saved_count:06d}.jpg'
+            # Calculate timestamp
+            timestamp_seconds = frame_number / fps
+            timestamp_hhmmss = format_timestamp(timestamp_seconds)
+            
+            # Create frame filename with metadata
+            frame_filename = (
+                f"timestamp_{timestamp_hhmmss.replace(':', '')}_"
+                f"frame_{frame_number:04d}_"
+                f"time_{timestamp_seconds:.1f}s.jpg"
+            )
+            
+            frame_path = output_path / frame_filename
             cv2.imwrite(str(frame_path), frame)
             saved_count += 1
             

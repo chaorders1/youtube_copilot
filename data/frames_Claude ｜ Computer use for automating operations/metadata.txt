@@ -1,0 +1,9 @@
+Video: Claude ｜ Computer use for automating operations
+FPS: 23
+Total Frames: 2946
+Duration: 00:02:08
+Frame Interval: 10.0 seconds
+
+Frame naming format:
+timestamp_HHMMSS_frame_XXXX_time_YYYYs.jpg
+where XXXX is the frame number and YYYY is the timestamp in seconds
