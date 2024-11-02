@@ -1,0 +1,40 @@
+﻿,goal,input,prompt ,output,,,,,,,,,,,,,,,,
+1. Persona/Brand,1A. Basic brand/persona analysis,"4 Screenshots: 
+-- 1 with heading
+-- 3 from most popular videos page","Prompt 1A (basic full analysis prompt)
+",Md file 1A (full profile),,,,,,,,,,,,,,,,
+,1B. Advanced brand/persona analysis,"Md file 1A1
+4 Additional screenshots: 
+-- 2 from community pages
+-- 2 from latest video page",Prompt 1B (advanced persona analysis prompt),Md file 1B (advanced persona),,,,,,,,,,,,,,,,
+,1C. Evaluation,"Md file 1B1
+","Prompt 1C1 (teaser evaluation prompt)
+Prompt 1C2 (persona graphics)
+Prompt 1C3 (learning tips for imitators)
+","Md file 1C1 (teaser evaluation letter to creator)
+Graphic file 1C2 (advanced persona graphics)
+Md file 1C3 (learning tips file to imitators)",,,,,,,,,,,,,,,,
+2. Audience Analysis,2A. Comments analysis,"Md file 1A1 
+4 Json files containing top 50 comments
+-- 2 from most popular
+-- 2 from most recent",Prompt 2A (generate comment analysis),"Md file 2A (comments analysis)
+",,,,,,,,,,,,,,,,
+,2B. Comments graphic,Md file 2A ,Prompt 2B (comments graphic prompt),Graphic file 2B (comments analysis),,,,,,,,,,,,,,,,
+3. Comments Reply,3A. Generate Comments,"Md file 1B1
+Json file containing top 20 comments to a given video",Prompt 3A (generate comments based on persona),Md file 3A (comments reply),,,,,,,,,,,,,,,,
+4. Benchmarking,4A. Find trending keywords,"Md file 1A2 (basic persona only)
+Md file 1A3 (persona keywords)",Prompt 4A (finding trending keywords),"Md file 4A (trending keywords)
+Graphic file (trending keywords)",,,,,,,,,,,,,,,,
+,4B. Find benchmarks,4 screenshots of YT recommended videos for OC's video incognito,Prompt 4B (rank videos based on similarity),Table 4B (list of videos based on similarity),,,,,,,,,,,,,,,,
+,4C. Compare personas ,Md file of personas,Prompt 4C (compare and rank competitor personas to creators),Table 4C (list of personas based on similarity),,,,,,,,,,,,,,,,
+,4D. Find outliers,,,,,,,,,,,,,,,,,,,
+5. Ideation,5A. Ideas based on user's own keyword inputs + comments analysis,"Md file SoMeGuide
+Md file 1B1 (advanced persona)
+Md file 3A (comments analysis)
+Md file 5A (user's own keyword inputs)","Prompt 5A (ideation based on user's keyword input, give reason)",Graphic file 5A (Ideas based on user's own keyword inputs with reason),,,,,,,,,,,,,,,,
+,5B. Ideas based on trending topics in segment + comments analysis,"Md file SoMeGuide
+Md file 1B1 (advanced persona)
+Md file 3A (comments analysis)
+Md file 4A (trending keywords)","Prompt 5B (ideation based on trending keywords, give reason)",Graphic file 5B (Ideas based on trending keywords with reason),,,,,,,,,,,,,,,,
+,5D. Ideas based on benchmarks,,,,,,,,,,,,,,,,,,,
+,5E. Ideas based on outliers,,,,,,,,,,,,,,,,,,,
