@@ -18,9 +18,11 @@ Example Usage:
     # python pikwy.py --url='https://www.youtube.com/@anthropic-ai/featured'
     # Capture video tab URL:
     # python pikwy.py --url='https://www.youtube.com/@anthropic-ai/videos'
+    # python pikwy.py --url='https://www.youtube.com/@aiDotEngineer/videos'
     
     # Capture multiple URLs from file:
     # python pikwy.py --file='urls.txt'
+    # python pikwy.py --file='/Users/yuanlu/Code/youtube_copilot/data/youtube_url.txt'
 
 Features:
     - Captures full page or partial screenshots
@@ -55,6 +57,7 @@ import urllib.parse
 import os
 import argparse
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 def generate_screenshot_api_url(token, options):
   api_url = 'https://api.pikwy.com/?token=' + token
@@ -67,18 +70,41 @@ def generate_screenshot_api_url(token, options):
     api_url += '&delay=' + options.get('delay', '10000')  # Wait 10 seconds
   return api_url
 
+def is_valid_url(url: str) -> bool:
+    """
+    Validate if the string is a valid URL.
+    
+    Args:
+        url (str): URL string to validate
+        
+    Returns:
+        bool: True if valid URL, False otherwise
+    """
+    try:
+        result = urlparse(url)
+        return all([result.scheme, result.netloc])  # Check if both scheme and network location exist
+    except:
+        return False
+
 def read_urls_from_file(file_path: str) -> list:
     """
-    Read URLs from a file.
+    Read URLs from a file, skipping invalid URLs.
 
     Args:
         file_path (str): The path to the file containing URLs.
 
     Returns:
-        list: A list of URLs.
+        list: A list of valid URLs.
     """
+    valid_urls = []
     with open(file_path, 'r') as file:
-        return [line.strip() for line in file if line.strip()]
+        for line in file:
+            url = line.strip()
+            if url and is_valid_url(url):
+                valid_urls.append(url)
+            elif url:  # If line is not empty but URL is invalid
+                print(f"Skipping invalid URL: {url}")
+    return valid_urls
 
 def save_screenshot(api_url: str, output_path: str) -> None:
     """
@@ -107,14 +133,14 @@ def main():
 
     options = {
         'width': '1280',
-        'height': '2048',
+        'height': '4096',
         'response_type': 'image',
         #'full_page': '1',
         'format': 'png',
         'delay': '10000'
     }
 
-    data_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Data')
+    data_folder = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data')
     output_dir = os.path.join(data_folder, 'web_snapshots')
     os.makedirs(output_dir, exist_ok=True)
 

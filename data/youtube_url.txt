@@ -1,0 +1,25 @@
+# List of verified YouTube channel URLs
+# Last updated: April 2024
+
+# Technology & Science
+https://www.youtube.com/@veritasium
+https://www.youtube.com/@Vsauce
+https://www.youtube.com/@kurzgesagt
+
+# Education
+https://www.youtube.com/@CrashCourse
+https://www.youtube.com/@TED
+
+# Music
+https://www.youtube.com/@vevo
+https://www.youtube.com/@nprmusic
+
+# Gaming
+https://www.youtube.com/@markiplier
+https://www.youtube.com/@pewdiepie
+
+# Cooking
+https://www.youtube.com/@BabishCulinaryUniverse
+
+# Note: Channel URLs are subject to change
+# Always verify URLs before using them
