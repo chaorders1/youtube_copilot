@@ -2,7 +2,7 @@
 Module for analyzing YouTube channel personas using Claude API.
 python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_anthropic_youtube_chanel
 python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_openai_youtube_chanel
-python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_veritasium_20241106_111925
+python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_veritasium_20241106_124941
 """
 import os
 import base64
@@ -289,8 +289,8 @@ class PersonaAnalyzer:
             logger.info("Sending request to Claude API...")
             response = self.client.messages.create(
                 model="claude-3-5-sonnet-20241022",
-                max_tokens=5000,
-                temperature=0.3,
+                max_tokens=500,
+                temperature=0.1,
                 messages=[{
                     'role': 'user',
                     'content': message_content

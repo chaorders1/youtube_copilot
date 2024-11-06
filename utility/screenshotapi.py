@@ -254,6 +254,34 @@ def capture_screenshot(url: str, output_dir: str, options: Optional[Dict] = None
         
     return None
 
+def screenshot(url: str) -> Optional[str]:
+    """
+    Capture a screenshot of a URL using default settings optimized for YouTube.
+    
+    This is the main interface function for the module.
+    
+    Args:
+        url: URL to capture screenshot of
+        
+    Returns:
+        Optional[str]: Path to saved screenshot file, or None if capture failed
+    """
+    # Set up default output directory
+    data_folder = Path(__file__).parent.parent / 'data'
+    output_dir = str(data_folder / 'web_snapshots')
+    
+    # Use default options optimized for YouTube
+    options = {
+        'width': '1920',
+        'height': '3240',
+        'file_type': 'png',
+        'full_page': 'false',
+        'block_ads': 'true',
+        'no_cookie_banners': 'true'
+    }
+    
+    return capture_screenshot(url, output_dir, options)
+
 def main():
     """Main function to handle command line arguments and capture screenshots."""
     # Load environment variables
@@ -285,7 +313,7 @@ def main():
     
     if args.url:
         # Handle single URL
-        if output_path := capture_screenshot(args.url, output_dir, options):
+        if output_path := screenshot(args.url):
             logger.info(f"Screenshot saved to: {output_path}")
     elif args.file:
         # Handle URLs from file
@@ -293,7 +321,7 @@ def main():
         urls = read_urls_from_file(str(urls_file))
         
         for url in urls:
-            if output_path := capture_screenshot(url, output_dir, options):
+            if output_path := screenshot(url):
                 logger.info(f"Screenshot saved for {url} to: {output_path}")
             else:
                 logger.error(f"Failed to capture screenshot for: {url}")
