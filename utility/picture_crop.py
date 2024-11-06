@@ -6,6 +6,7 @@ It maintains the original image quality and width while dividing it into specifi
 Example Usage:
     # Process single image
     python picture_crop.py --image "/path/to/image.png"
+    python picture_crop.py --image "/Users/yuanlu/Code/youtube_copilot/data/web_snapshots/veritasium_20241106_111925.png"
     
     # Process entire directory
     python picture_crop.py --dir "/path/to/directory"
@@ -48,7 +49,7 @@ def get_output_format(input_file: str) -> str:
 def process_directory(
     input_dir: str, 
     output_dir: str = None, 
-    part_height: int = 800, 
+    part_height: int = 1200, 
     overlap: int = 200
 ) -> None:
     """Process all supported image files in a directory."""
@@ -76,7 +77,7 @@ def process_directory(
         except Exception as e:
             print(f"Error processing {image_file.name}: {e}")
 
-def crop_picture(input_file: str, output_dir: str = None, part_height: int = 800, overlap: int = 200) -> None:
+def crop_picture(input_file: str, output_dir: str = None, part_height: int = 1200, overlap: int = 200) -> None:
     """Crop an image into multiple parts vertically with overlap."""
     # Setup paths
     input_path = Path(input_file)
@@ -146,7 +147,7 @@ if __name__ == '__main__':
     group.add_argument('--image', help='Path to single image file')
     group.add_argument('--dir', help='Path to directory containing images')
     parser.add_argument('--output', help='Output directory name')
-    parser.add_argument('--height', type=int, default=800, help='Height of each part (default: 800)')
+    parser.add_argument('--height', type=int, default=1200, help='Height of each part (default: 1200)')
     parser.add_argument('--overlap', type=int, default=200, help='Overlap between parts (default: 200)')
     
     args = parser.parse_args()
