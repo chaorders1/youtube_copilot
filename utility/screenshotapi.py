@@ -1,45 +1,65 @@
 """Screenshot Utility
 
 This module provides functionality to capture website screenshots using the ScreenshotAPI service.
-It saves screenshots to a specified output directory with configurable options.
+It specializes in capturing YouTube channel pages with optimized settings.
 
 Example Usage:
-    # Basic usage - capture single URL screenshot
-    screenshot('https://www.youtube.com/@anthropic-ai/featured')
+    # Basic usage - capture YouTube channel
+    screenshot('https://www.youtube.com/@veritasium')
     
     # Capture with custom options
-    screenshot('https://www.youtube.com/@anthropic-ai/featured',
+    screenshot('https://www.youtube.com/@veritasium',
               width=1920,
+              height=3240,  # 1080 * 3 for better content capture
               format='png',
               output_dir='screenshots')
     
     # Command line usage:
-    # Capture single URL:
-    # python screenshotapi.py --url='https://www.youtube.com/@anthropic-ai/featured'
-    # python screenshotapi.py --url='https://www.youtube.com/@veritasium'
+    # Single channel capture:
+    python screenshotapi.py --url='https://www.youtube.com/@veritasium'
     
-    # Capture multiple URLs from file:
-    # python screenshotapi.py --file='urls.txt'
-    # python screenshotapi.py --file='/path/to/youtube_url.txt'
+    # Batch capture from file:
+    python screenshotapi.py --file='/Users/yuanlu/Code/youtube_copilot/data/youtube_url.txt'
 
 Features:
-    - Captures full page or partial screenshots
-    - Configurable viewport dimensions
-    - Multiple output formats (PNG, JPG, WebP, PDF)
-    - Custom delay for dynamic content loading
-    - Progress tracking and logging
-    - Error handling and retries
-    - Cookie and ad blocking options
+    - Optimized for YouTube channel pages
+    - Smart file naming using channel handles
+    - Lazy loading support for dynamic content
+    - High-resolution capture (1920x3240)
+    - Ad and cookie banner blocking
+    - Custom CSS injection for YouTube-specific elements
+    - Automatic retries with exponential backoff
+    - Comprehensive error handling and logging
+    - URL validation and sanitization
 
 Output Structure:
     data/web_snapshots/
-    └── screenshot_{timestamp}.png      # Screenshot file
+    └── {channel_name}_{timestamp}.png
+    Example: veritasium_20241106_102308.png
+
+Technical Details:
+    - Uses ScreenshotAPI's advanced features:
+        - Lazy loading detection
+        - Network idle waiting
+        - Custom viewport settings
+        - CSS injection for YouTube elements
+    - Implements robust error handling with 3 retries
+    - Validates URLs before processing
+    - Generates meaningful filenames from YouTube URLs
 
 Requirements:
     - Python 3.6+
     - urllib (standard library)
     - os (standard library)
-    - python-dotenv (for environment variables)
+    - datetime (standard library)
+    - logging (standard library)
+    - python-dotenv (for API token management)
+
+Configuration:
+    - API token should be set in .env file as SCREENSHOT_API_TOKEN
+    - Default output directory: data/web_snapshots/
+    - Default image format: PNG
+    - Default viewport: 1920x3240 (optimized for YouTube)
 """
 
 #!/usr/bin/python3

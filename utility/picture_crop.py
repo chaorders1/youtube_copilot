@@ -4,44 +4,31 @@ This module provides functionality to crop large images into smaller parts verti
 It maintains the original image quality and width while dividing it into specified heights.
 
 Example Usage:
-    # Basic usage with default height (800px) and overlap (200px)
-    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png"
-    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/openai_youtube_chanel.png"
+    # Process single image
+    python picture_crop.py --image "/path/to/image.png"
     
-    # With custom output directory
-    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png" custom_output
+    # Process entire directory
+    python picture_crop.py --dir "/path/to/directory"
     
-    # With custom height (1024px)
-    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png" custom_output 1024
-    
-    # Full options (image, output dir, height, overlap)
-    python picture_crop.py "/Users/yuanlu/Code/youtube_copilot/data/snapshot/anthropic_youtube_chanel.png" custom_output 1024 100
+    # Process directory with custom settings
+    python picture_crop.py --dir "//Users/yuanlu/Code/youtube_copilot/data/web_snapshots" --output "custom_output" --height 1024 --overlap 100
+    python picture_crop.py --dir "//Users/yuanlu/Code/youtube_copilot/data/web_snapshots"  --height 1024 --overlap 100
 
 Features:
-    - Crops images into parts of specified height
-    - Maintains original image width and quality
-    - Supports multiple image formats (JPEG, PNG, GIF, BMP, TIFF)
-    - Configurable overlap between parts
-    - Organized output directory structure
-    - Detailed metadata generation
-
-Output Structure:
-    output_dir/
-    ├── metadata.txt           # Crop information and image properties
-    └── parts/
-        ├── original_name_part_1_h800_overlap200.jpg
-        ├── original_name_part_2_h800_overlap200.jpg
-        └── ...
-
-Requirements:
-    - PIL (Python Imaging Library)
-    - Python 3.6+
+    - Supports both single image and directory processing
+    - Processes PNG, JPEG, JPG, GIF, BMP, TIFF files
+    - Maintains original image quality and structure
+    - Configurable crop settings
 """
 
 from PIL import Image
 import os
 from pathlib import Path
 from datetime import datetime
+import argparse
+from typing import Set, List
+
+SUPPORTED_FORMATS: Set[str] = {'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.tiff'}
 
 def get_output_format(input_file: str) -> str:
     """Get the appropriate output format based on input file extension."""
@@ -58,108 +45,117 @@ def get_output_format(input_file: str) -> str:
     
     return format_map.get(ext, 'JPEG')
 
-def crop_picture(input_file: str, output_dir: str = None, part_height: int = 800, overlap: int = 200) -> None:
-    """
-    Crop an image into multiple parts vertically with overlap.
+def process_directory(
+    input_dir: str, 
+    output_dir: str = None, 
+    part_height: int = 800, 
+    overlap: int = 200
+) -> None:
+    """Process all supported image files in a directory."""
+    input_path = Path(input_dir)
     
-    Args:
-        input_file: Path to the input image
-        output_dir: Directory to save cropped parts (if None, will create based on image name)
-        part_height: Height of each part in pixels (default: 800)
-        overlap: Height of overlap between parts in pixels (default: 200)
-    """
-    # Step 1: Setup paths
+    if not input_path.exists():
+        raise FileNotFoundError(f"Directory not found: {input_dir}")
+    
+    # Get all image files in directory
+    image_files = []
+    for ext in SUPPORTED_FORMATS:
+        image_files.extend(input_path.glob(f"*{ext}"))
+    
+    if not image_files:
+        print(f"No supported image files found in {input_dir}")
+        return
+    
+    print(f"Found {len(image_files)} image(s) to process")
+    
+    # Process each image
+    for idx, image_file in enumerate(image_files, 1):
+        print(f"\nProcessing image {idx}/{len(image_files)}: {image_file.name}")
+        try:
+            crop_picture(str(image_file), output_dir, part_height, overlap)
+        except Exception as e:
+            print(f"Error processing {image_file.name}: {e}")
+
+def crop_picture(input_file: str, output_dir: str = None, part_height: int = 800, overlap: int = 200) -> None:
+    """Crop an image into multiple parts vertically with overlap."""
+    # Setup paths
     input_path = Path(input_file)
     image_name = input_path.stem
     
-    # Step 2: Determine output directory
+    # Determine output directory
     if output_dir:
-        # If custom output_dir provided, check if it starts with 'crop_'
         prefix = '' if output_dir.startswith('crop_') else 'crop_'
         output_dir = f'{prefix}{output_dir}_{image_name}'
     else:
         output_dir = f'crop_{image_name}'
     
-    # Step 3: Setup output path
+    # Setup output path
     project_root = Path(__file__).resolve().parent.parent
     output_path = project_root / 'data' / output_dir
     
-    # Step 4: Create output directory
+    # Create output directory
     output_path.mkdir(parents=True, exist_ok=True)
     
-    print(f'Project root: {project_root}')
-    print(f'Processing image: {input_path}')
-    print(f'Parts will be saved to: {output_path}')
-    
-    # Open and process the image
+    # Process the image
     with Image.open(input_path) as img:
         width, height = img.size
         num_parts = (height + part_height - 1) // part_height
-        
-        # Get output format
         output_format = get_output_format(str(input_path))
         extension = '.jpg' if output_format == 'JPEG' else f'.{output_format.lower()}'
         
-        # Create metadata file
-        metadata_path = output_path / 'metadata.txt'
-        with open(metadata_path, 'w', encoding='utf-8') as f:
-            f.write(f"Image Crop Metadata:\n")
-            f.write(f"==================\n\n")
-            f.write(f"Source Information:\n")
-            f.write(f"- Image File: {image_name}\n")
-            f.write(f"- Original Path: {input_path}\n")
-            f.write(f"- Format: {output_format}\n")
-            
-            f.write(f"\nImage Properties:\n")
-            f.write(f"- Dimensions: {width}x{height}\n")
-            f.write(f"- Mode: {img.mode}\n")
-            
-            f.write(f"\nCrop Settings:\n")
-            f.write(f"- Part Height: {part_height} pixels\n")
-            f.write(f"- Overlap: {overlap} pixels\n")
-            f.write(f"- Number of Parts: {num_parts}\n")
-            f.write(f"- Output Directory: {output_path}\n")
-            
-            f.write(f"\nFile Naming Convention:\n")
-            f.write(f"original_name_part_X_h{part_height}_overlap{overlap}{extension}\n")
-            f.write(f"where:\n")
-            f.write(f"- original_name: Name of the source image\n")
-            f.write(f"- X: Part number\n")
-            f.write(f"- h{part_height}: Height of each part\n")
-            f.write(f"- overlap{overlap}: Overlap between parts\n")
-            
-            f.write(f"\nProcessing Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        # Create metadata
+        create_metadata(output_path, input_path, img, output_format, 
+                       width, height, part_height, overlap, num_parts, extension)
         
-        # Crop and save parts with overlap
+        # Crop and save parts
         for i in range(num_parts):
-            # Calculate crop boundaries with overlap
             top = max(0, i * (part_height - overlap))
             bottom = min(height, top + part_height)
             
             part = img.crop((0, top, width, bottom))
             output_file = output_path / f"{image_name}_part_{i+1}_h{part_height}_overlap{overlap}{extension}"
             part.save(output_file, output_format)
-            print(f"Saved part {i+1}/{num_parts}: {output_file}")
-            print(f"  Position: {top} to {bottom} pixels")
-        
-        print(f'\nCompleted:')
-        print(f'- Parts created: {num_parts}')
-        print(f'- Output location: {output_path}')
+            print(f"  Saved part {i+1}/{num_parts}: {output_file.name}")
+
+def create_metadata(output_path: Path, input_path: Path, img: Image, 
+                   output_format: str, width: int, height: int, 
+                   part_height: int, overlap: int, num_parts: int, 
+                   extension: str) -> None:
+    """Create metadata file for the cropping operation."""
+    metadata_path = output_path / 'metadata.txt'
+    with open(metadata_path, 'w', encoding='utf-8') as f:
+        f.write(f"Image Crop Metadata:\n")
+        f.write(f"==================\n\n")
+        f.write(f"Source Information:\n")
+        f.write(f"- Image File: {input_path.name}\n")
+        f.write(f"- Original Path: {input_path}\n")
+        f.write(f"- Format: {output_format}\n")
+        f.write(f"\nImage Properties:\n")
+        f.write(f"- Dimensions: {width}x{height}\n")
+        f.write(f"- Mode: {img.mode}\n")
+        f.write(f"\nCrop Settings:\n")
+        f.write(f"- Part Height: {part_height} pixels\n")
+        f.write(f"- Overlap: {overlap} pixels\n")
+        f.write(f"- Number of Parts: {num_parts}\n")
+        f.write(f"- Output Directory: {output_path}\n")
+        f.write(f"\nProcessing Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
 
 if __name__ == '__main__':
-    import sys
+    parser = argparse.ArgumentParser(description='Crop images into vertical parts with overlap')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--image', help='Path to single image file')
+    group.add_argument('--dir', help='Path to directory containing images')
+    parser.add_argument('--output', help='Output directory name')
+    parser.add_argument('--height', type=int, default=800, help='Height of each part (default: 800)')
+    parser.add_argument('--overlap', type=int, default=200, help='Overlap between parts (default: 200)')
     
-    if len(sys.argv) < 2:
-        print("Usage: python picture_crop.py <image_path> [output_dir] [part_height] [overlap]")
-        sys.exit(1)
-    
-    image_path = sys.argv[1]
-    output_dir = sys.argv[2] if len(sys.argv) > 2 else None
-    part_height = int(sys.argv[3]) if len(sys.argv) > 3 else 800
-    overlap = int(sys.argv[4]) if len(sys.argv) > 4 else 200
+    args = parser.parse_args()
     
     try:
-        crop_picture(image_path, output_dir, part_height, overlap)
+        if args.image:
+            crop_picture(args.image, args.output, args.height, args.overlap)
+        else:
+            process_directory(args.dir, args.output, args.height, args.overlap)
     except Exception as e:
         print(f'Error: {e}')
-        sys.exit(1)
+        exit(1)

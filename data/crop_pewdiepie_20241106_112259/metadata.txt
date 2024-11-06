@@ -1,0 +1,19 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: pewdiepie_20241106_112259.png
+- Original Path: //Users/yuanlu/Code/youtube_copilot/data/web_snapshots/pewdiepie_20241106_112259.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 3360x5542
+- Mode: RGB
+
+Crop Settings:
+- Part Height: 1024 pixels
+- Overlap: 100 pixels
+- Number of Parts: 6
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/crop_pewdiepie_20241106_112259
+
+Processing Date: 2024-11-06 11:25:56

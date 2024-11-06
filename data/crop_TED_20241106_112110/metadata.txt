@@ -1,0 +1,19 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: TED_20241106_112110.png
+- Original Path: //Users/yuanlu/Code/youtube_copilot/data/web_snapshots/TED_20241106_112110.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 3360x4422
+- Mode: RGB
+
+Crop Settings:
+- Part Height: 1024 pixels
+- Overlap: 100 pixels
+- Number of Parts: 5
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/crop_TED_20241106_112110
+
+Processing Date: 2024-11-06 11:26:15
