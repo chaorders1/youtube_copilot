@@ -53,6 +53,7 @@ from typing import Dict, Optional, List
 from dotenv import load_dotenv
 from urllib.parse import urlparse
 from datetime import datetime
+import time
 
 # Configure logging
 logging.basicConfig(
@@ -71,29 +72,57 @@ class ScreenshotAPI:
         self.api_token = api_token
         
     def generate_api_url(self, url: str, options: Dict) -> str:
-        """Generate API URL with parameters."""
+        """Generate API URL with parameters optimized for YouTube content capture."""
         params = {
+            # Required parameters
             'token': self.api_token,
             'url': url,
-            'width': options.get('width', '1680'),
-            'height': options.get('height', '867'),
-            'output': options.get('output', 'image'),
+            
+            # Output settings
+            'output': 'image',
             'file_type': options.get('file_type', 'png'),
-            'full_page': options.get('full_page', 'false'),
-            'delay': options.get('delay', '5000'),  # 5 second delay
-            'block_ads': options.get('block_ads', 'true'),
-            'no_cookie_banners': options.get('no_cookie_banners', 'true'),
-            'retina': options.get('retina', 'false'),
-            'fresh': options.get('fresh', 'true')
+            
+            # Viewport settings - Optimized for YouTube
+            'width': options.get('width', '1920'),
+            'height': options.get('height', '3240'),  # 1080 * 3 for better content capture
+            'full_page': 'false',  # Disabled as per requirement
+            
+            # Loading optimizations
+            'delay': options.get('delay', '12000'),  # Increased to 12 seconds
+            'wait_for_event': 'networkidle0',  # Wait for all network requests to finish
+            'lazy_load': 'true',  # Enable lazy loading detection
+            'fresh': 'true',  # Always get fresh screenshot
+            
+            # Scrolling configuration
+            'scrolling_screenshot': 'true',
+            'scroll_speed': 'slow',  # Slow scroll for better content loading
+            'duration': '30',  # 30 seconds scroll duration
+            'scroll_back': 'false',  # No need to scroll back for YouTube
+            
+            # Content blocking
+            'block_ads': 'true',
+            'no_cookie_banners': 'true',
+            
+            # Quality settings
+            'retina': 'true'
         }
         
-        # Add optional parameters if specified
-        if options.get('css'):
-            params['css'] = options['css']
-        if options.get('user_agent'):
-            params['user_agent'] = options['user_agent']
+        # YouTube-specific CSS injection
+        params['css'] = '''
+            /* Force show thumbnails and content */
+            ytd-rich-grid-renderer, ytd-rich-item-renderer {
+                visibility: visible !important;
+                opacity: 1 !important;
+            }
             
-        # Construct query string
+            /* Hide unnecessary elements */
+            ytd-popup-container,
+            tp-yt-paper-dialog,
+            .ytd-consent-bump-v2-lightbox { 
+                display: none !important; 
+            }
+        '''
+
         query_string = urllib.parse.urlencode(params)
         return f"{self.BASE_URL}?{query_string}"
 
@@ -122,42 +151,55 @@ def read_urls_from_file(file_path: str) -> List[str]:
     return valid_urls
 
 def save_screenshot(api_url: str, output_path: str, retries: int = 3) -> bool:
-    """
-    Save a screenshot from the API URL to the specified output path.
-    
-    Args:
-        api_url: The API URL to retrieve the screenshot
-        output_path: The path to save the screenshot
-        retries: Number of retry attempts (default: 3)
-        
-    Returns:
-        bool: True if successful, False otherwise
-    """
+    """Save a screenshot with improved error handling."""
     for attempt in range(retries):
         try:
-            urllib.request.urlretrieve(api_url, output_path)
-            logger.info(f"Screenshot saved successfully to: {output_path}")
-            return True
-        except Exception as e:
+            # Create request with headers
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/91.0.4472.124 Safari/537.36',
+                'Accept': 'image/*'
+            }
+            request = urllib.request.Request(api_url, headers=headers)
+            
+            # Make request with timeout
+            with urllib.request.urlopen(request, timeout=30) as response:
+                if response.status != 200:
+                    raise urllib.error.HTTPError(
+                        api_url, response.status, 
+                        "Failed to fetch screenshot", 
+                        response.headers, None
+                    )
+                
+                # Read and save the image data
+                with open(output_path, 'wb') as f:
+                    f.write(response.read())
+                
+                # Verify file was created and has content
+                if os.path.exists(output_path) and os.path.getsize(output_path) > 0:
+                    logger.info(f"Screenshot saved successfully to: {output_path}")
+                    return True
+                else:
+                    raise Exception("Screenshot file is empty or not created")
+                    
+        except urllib.error.HTTPError as e:
+            logger.error(f"HTTP Error on attempt {attempt + 1}: {e.code} - {e.reason}")
             if attempt < retries - 1:
-                logger.warning(f"Attempt {attempt + 1} failed. Retrying... Error: {e}")
-            else:
-                logger.error(f"Failed to save screenshot after {retries} attempts: {e}")
-                return False
+                time.sleep(min((attempt + 1) * 2, 10))
+                
+        except urllib.error.URLError as e:
+            logger.error(f"URL Error on attempt {attempt + 1}: {str(e)}")
+            if attempt < retries - 1:
+                time.sleep(min((attempt + 1) * 2, 10))
+                
+        except Exception as e:
+            logger.error(f"Error on attempt {attempt + 1}: {str(e)}")
+            if attempt < retries - 1:
+                time.sleep(min((attempt + 1) * 2, 10))
+                
     return False
 
 def capture_screenshot(url: str, output_dir: str, options: Optional[Dict] = None) -> Optional[str]:
-    """
-    Capture a screenshot of the specified URL.
-    
-    Args:
-        url: The URL to capture
-        output_dir: Directory to save the screenshot
-        options: Screenshot options
-        
-    Returns:
-        Optional[str]: Path to saved screenshot if successful, None otherwise
-    """
+    """Capture a screenshot with improved error handling and naming."""
     if not options:
         options = {}
         
@@ -171,10 +213,13 @@ def capture_screenshot(url: str, output_dir: str, options: Optional[Dict] = None
         
         # Generate API URL
         api_url = api_client.generate_api_url(url, options)
+        logger.debug(f"Generated API URL: {api_url}")
         
-        # Create output filename
+        # Create output filename using URL components
+        parsed_url = urlparse(url)
+        channel_name = parsed_url.path.split('@')[-1].split('/')[0] if '@' in parsed_url.path else 'screenshot'
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
-        filename = f"screenshot_{timestamp}.{options.get('file_type', 'png')}"
+        filename = f"{channel_name}_{timestamp}.{options.get('file_type', 'png')}"
         output_path = os.path.join(output_dir, filename)
         
         # Ensure output directory exists
