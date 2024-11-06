@@ -2,6 +2,7 @@
 Module for analyzing YouTube channel personas using Claude API.
 python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_anthropic_youtube_chanel
 python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_openai_youtube_chanel
+python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_veritasium_20241106_111925
 """
 import os
 import base64
@@ -17,6 +18,7 @@ import json
 import html2text
 import ebooklib
 from ebooklib import epub
+from dotenv import load_dotenv
 
 # Configure logging
 logging.basicConfig(
@@ -39,94 +41,107 @@ class PersonaAnalyzer:
     PROMPT_TEMPLATE = """
     You are an expert in YouTube content creation and an advisor to the content creator shown in the following screenshots. Your task is to analyze these screenshots and generate a comprehensive report in markdown format. Here are the screenshots:
 
-<screenshots>
-{{SCREENSHOTS}}
-</screenshots>
+    <screenshots>
+    {{SCREENSHOTS}}
+    </screenshots>
 
-Carefully examine these screenshots and use the information they contain to complete the following framework. Your language should be vivid, descriptive, and easy to understand. Please strictly follow the framework structure and maintain consistent formatting throughout your report.
+    Carefully examine these screenshots and use the information they contain to complete the following framework. Your language should be vivid, descriptive, and easy to understand. Please strictly follow the framework structure and maintain consistent formatting throughout your report.
 
-Your report should be divided into three main parts:
+    Your report should be divided into three main parts:
 
-PART 1: CLASSIFICATION & METRICS
-In this section, complete the following steps:
+    PART 1: CLASSIFICATION & METRICS
+    In this section, complete the following steps:
 
-1. Basic Channel Data
-   - Identify the channel name and subscriber count
-   - List the top 10 performing videos shown, ranked by exact views
-   - Calculate the average views across these videos
-   - Note the themes of the top 5 performing videos and analyze what deeper audience desires these reveal
+    1. Basic Channel Data
+       - Identify the channel name and subscriber count
+       - List the top 10 performing videos shown, ranked by exact views
+       - Calculate the average views across these videos
+       - Note the themes of the top 5 performing videos and analyze what deeper audience desires these reveal
 
-2. Channel Classification
-   - Identify the primary category of the channel:
-     a) Personality/Entertainment Driven
-     b) Professional/Educational
-     c) Curated/Aggregate
-   - Identify the main area of interest (e.g., Food, Travel, Technology, Fashion, Education, Relationships, Gaming)
-   - Identify the specific subculture or niche (e.g., Practical Italian recipes)
-   - Note whether the creator shows their own face in the content
+    2. Channel Classification
+       - Identify the primary category of the channel:
+         a) Personality/Entertainment Driven
+         b) Professional/Educational
+         c) Curated/Aggregate
+       - Identify the main area of interest (e.g., Food, Travel, Technology, Fashion, Education, Relationships, Gaming)
+       - Identify the specific subculture or niche (e.g., Practical Italian recipes)
+       - Note whether the creator shows their own face in the content
 
-PART 2: CATEGORY-SPECIFIC ANALYSIS
-Based on your classification in Part 1, follow the relevant framework:
+    PART 2: CATEGORY-SPECIFIC ANALYSIS
+    Based on your classification in Part 1, follow the relevant framework:
 
-FOR PERSONALITY/ENTERTAINMENT CHANNELS ONLY:
-Analyze the Creator Essence, paying particular attention to cultural resonance, audience connection, and authentic storytelling elements. Include:
-- Linguistic style (e.g., humorous, serious, warm, thoughtful)
-- Use of regional or subculture slang / emojis / catchphrases if any
-- Quote examples from video titles (double check for accuracy)
-- Distinguishing demographic or cultural characteristics if shown
-- Personal Values (in about 50 words) including core beliefs demonstrated, what they stand for, life philosophy
-- Key Life Events & Journey ONLY IF SHOWN: Origin story, major transitions, career changes, location moves, significant milestones, current situation
-- Aesthetics: Briefly describe color schemes, composition methods, and style preferences
+    FOR PERSONALITY/ENTERTAINMENT CHANNELS ONLY:
+    Analyze the Creator Essence, paying particular attention to cultural resonance, audience connection, and authentic storytelling elements. Include:
+    - Linguistic style (e.g., humorous, serious, warm, thoughtful)
+    - Use of regional or subculture slang / emojis / catchphrases if any
+    - Quote examples from video titles (double check for accuracy)
+    - Distinguishing demographic or cultural characteristics if shown
+    - Personal Values (in about 50 words) including core beliefs demonstrated, what they stand for, life philosophy
+    - Key Life Events & Journey ONLY IF SHOWN: Origin story, major transitions, career changes, location moves, significant milestones, current situation
+    - Aesthetics: Briefly describe color schemes, composition methods, and style preferences
 
-FOR PROFESSIONAL/EDUCATIONAL CHANNELS ONLY:
-Analyze the Brand Essence, paying particular attention to brand positioning, authority, subcultural or local resonance, and audience connection. Include:
-- Expertise demonstration
-- Presentation style
-- Brand mission / corporate identity
-- Target location, demographic or culture characteristics
-- Value proposition clarity
-- Credibility markers
+    FOR PROFESSIONAL/EDUCATIONAL CHANNELS ONLY:
+    Analyze the Brand Essence, paying particular attention to brand positioning, authority, subcultural or local resonance, and audience connection. Include:
+    - Expertise demonstration
+    - Presentation style
+    - Brand mission / corporate identity
+    - Target location, demographic or culture characteristics
+    - Value proposition clarity
+    - Credibility markers
 
-FOR CURATED CHANNELS ONLY:
-Analyze the Curation Effectiveness, paying particular attention to theme and flow, subcultural or local resonance, and audience connection. Include:
-- Content selection criteria
-- Value addition methods
-- Source management
-- Theme consistency
-- Community building
+    FOR CURATED CHANNELS ONLY:
+    Analyze the Curation Effectiveness, paying particular attention to theme and flow, subcultural or local resonance, and audience connection. Include:
+    - Content selection criteria
+    - Value addition methods
+    - Source management
+    - Theme consistency
+    - Community building
 
-PART 3: UNIVERSAL ANALYSIS
-Complete this section for all channels:
+    PART 3: UNIVERSAL ANALYSIS
+    Complete this section for all channels:
 
-1. Content Strategy
-   - Overall impression of brand personality (about 100 words, can include examples and quotes)
-   - Most successful formats and themes
-   - Title/thumbnail patterns
-   - Upload frequency
-   - List of 5 key phrases to find similar accounts
+    1. Content Strategy
+       - Overall impression of brand personality (about 100 words, can include examples and quotes)
+       - Most successful formats and themes
+       - Title/thumbnail patterns
+       - Upload frequency
+       - List of 5 key phrases to find similar accounts
 
-2. Brief Summary (300 words, can include examples and quotes)
-   - Key success factors
-   - Audience pain points
-   - What the audience aspires to be
-   - Primary strengths
-   - Growth opportunities
-   - Unique value proposition
+    2. Brief Summary (300 words, can include examples and quotes)
+       - Key success factors
+       - Audience pain points
+       - What the audience aspires to be
+       - Primary strengths
+       - Growth opportunities
+       - Unique value proposition
 
-Format your entire report in markdown, using appropriate headers, bullet points, and emphasis where needed. Ensure that your analysis is thorough, insightful, and based solely on the information provided in the screenshots. Do not make assumptions or include information not evident from the given data.
+    Format your entire report in markdown, using appropriate headers, bullet points, and emphasis where needed. Ensure that your analysis is thorough, insightful, and based solely on the information provided in the screenshots. Do not make assumptions or include information not evident from the given data.
 
-Begin your analysis now.
+    Begin your analysis now.
 
     """
 
-    def __init__(self, api_key: str = None):
-        """
-        Initialize the PersonaAnalyzer.
-
-        Args:
-            api_key (str, optional): Anthropic API key. Defaults to environment variable.
-        """
-        self.client = Anthropic(api_key=api_key)
+    def __init__(self):
+        """Initialize the analyzer with API client."""
+        # 确保环境变量已加载
+        load_dotenv()
+        
+        # 获取 API 密钥并验证
+        api_key = os.getenv('ANTHROPIC_API_KEY')
+        if not api_key:
+            raise ValueError("ANTHROPIC_API_KEY not found in environment variables")
+            
+        # 打印部分密钥用于调试（只显示前几个字符）
+        logger.info(f"API key loaded: {api_key[:8]}...")
+        
+        try:
+            # 初始化 Anthropic 客户端
+            self.client = Anthropic(
+                api_key=api_key
+            )
+        except Exception as e:
+            logger.error(f"Error initializing Anthropic client: {e}")
+            raise
         self.html_converter = html2text.HTML2Text()
         self.html_converter.ignore_links = True
 
