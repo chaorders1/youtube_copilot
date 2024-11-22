@@ -20,6 +20,7 @@ Example Usage:
     
     # Batch capture from file:
     python screenshotapi.py --file='/Users/yuanlu/Code/youtube_copilot/data/youtube_url.txt'
+    python screenshotapi.py --file='/Users/yuanlu/Code/youtube_copilot/data/youtube-channels.txt'
 
 Features:
     - Optimized for YouTube channel pages
