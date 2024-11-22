@@ -1,6 +1,7 @@
 """
 Module for replying to YouTube comments using Claude API.
-python -m utility.youtube_comments_reply /Users/yuanlu/Code/youtube_copilot/data/comments
+python -m utility.youtube_comments_reply /path/to/comments/folder --persona /path/to/custom_persona.md
+python -m utility.youtube_comments_reply '/Users/yuanlu/Desktop/YC/comment video raw data/my_oregon_coast_road_trip-comments.json' --persona '/Users/yuanlu/Desktop/YC/comment video raw data/crop_allisonanderson_20241111_212633_analysis.md'
 """
 import os
 import argparse
@@ -22,19 +23,23 @@ class CommentReplier:
     """
     A class to generate replies for YouTube comments using Claude API.
     """
-    def __init__(self, api_key: str = None):
+    def __init__(self, api_key: str = None, prompt_path: Path = None):
         """
         Initialize the CommentReplier.
 
         Args:
             api_key (str, optional): Anthropic API key. Defaults to environment variable.
+            prompt_path (Path, optional): Path to custom prompt template. Defaults to None.
         """
         self.client = Anthropic(api_key=api_key)
+        self.prompt_path = prompt_path
         self.prompt_template = self._load_prompt_template()
 
     def _load_prompt_template(self) -> str:
         """Load the prompt template from the markdown file."""
-        prompt_path = Path(__file__).parent.parent / 'prompt' / 'prompt_persona.md'
+        # Use custom prompt path if provided, otherwise use default
+        default_path = Path(__file__).parent.parent / 'prompt' / 'prompt_persona.md'
+        prompt_path = self.prompt_path or default_path
         try:
             with open(prompt_path, 'r', encoding='utf-8') as file:
                 return file.read()
@@ -204,9 +209,17 @@ def parse_args():
         description='Generate replies for YouTube comments using Claude API.'
     )
     parser.add_argument(
-        'input_folder',
+        'input_path',
         type=str,
-        help='Path to folder containing comment JSON files'
+        help='Path to comments JSON file or folder containing JSON files'
+    )
+    parser.add_argument(
+        '--persona',
+        '-p',
+        type=str,
+        help='Path to custom persona prompt file (markdown)',
+        default=None,
+        required=False
     )
     return parser.parse_args()
 
@@ -216,16 +229,21 @@ def main():
         # Parse command line arguments
         args = parse_args()
         
-        # Initialize replier
-        replier = CommentReplier()
+        # Initialize replier with custom prompt if provided
+        prompt_path = Path(args.persona) if args.persona else None
+        replier = CommentReplier(prompt_path=prompt_path)
         
-        # Process all files in the folder
-        output_files = replier.process_folder(args.input_folder)
-        
-        # Log results
-        logger.info(f"Successfully processed {len(output_files)} files:")
-        for file_path in output_files:
-            logger.info(f"- {file_path}")
+        # Check if input is file or folder
+        input_path = Path(args.input_path)
+        if input_path.is_file():
+            output_file = replier.process_comments_file(input_path)
+            logger.info(f"Successfully processed file: {output_file}")
+        else:
+            # Process all files in the folder
+            output_files = replier.process_folder(input_path)
+            logger.info(f"Successfully processed {len(output_files)} files:")
+            for file_path in output_files:
+                logger.info(f"- {file_path}")
         
     except Exception as e:
         logger.error(f"Error in main: {str(e)}")

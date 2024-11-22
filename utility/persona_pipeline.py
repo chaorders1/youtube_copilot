@@ -9,6 +9,7 @@ Example Usage:
     
     # Process single YouTube channel
     python persona_pipeline.py --url="https://www.youtube.com/@veritasium"
+    python persona_pipeline.py --url="https://www.youtube.com/@AIJasonZ"
     
     # Custom configuration with file input
     python persona_pipeline.py --urls-file="custom_urls.txt" --max-retries=5

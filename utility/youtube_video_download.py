@@ -9,18 +9,20 @@ Example Usage:
     
     # Download with specific quality and custom output
     video_download('https://www.youtube.com/watch?v=ODaHJzOyVCQ', 
-                  quality='720p',
+                  quality='720p',f
                   output_dir='my_videos')
     
     # Command line usage:
     # Download video in MP4 format:
     # python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ'
+    # python youtube_video_download.py url='https://www.youtube.com/watch?v=aHpkkOZGu0g'
     
     # Download audio only:
     # python youtube_video_download.py url='https://www.youtube.com/watch?v=ODaHJzOyVCQ' format='audio'
     
     # Download with English subtitles:
     # python youtube_video_download.py url='https://www.youtube.com/watch?v=vH2f7cjXjKI' subtitles='en'
+    # python youtube_video_download.py url='https://www.youtube.com/watch?v=Z3_PwvvfxIU' subtitles='en'
 
 Features:
     - Downloads videos in various formats (MP4, WebM, audio-only)

@@ -1,3 +1,64 @@
+"""YouTube Channel Persona Analyzer
+
+This module provides functionality to analyze YouTube channel content and generate
+comprehensive persona reports using the Claude API. It processes channel screenshots
+and content to extract key insights about the channel's brand, audience, and content strategy.
+
+Example Usage:
+    # Basic usage with directory of channel screenshots
+    analyzer = PersonaAnalyzer()
+    analysis = analyzer.analyze_channel('data/crop_veritasium_20241106_124941')
+    
+    # Command line usage:
+    python persona.py /path/to/cropped/screenshots
+    
+    # Pipeline integration:
+    pipeline = PersonaPipeline()
+    pipeline.process_channel('https://youtube.com/@veritasium')
+
+Features:
+    - Comprehensive channel analysis including:
+        - Basic channel metrics and classification
+        - Brand essence and presentation style
+        - Content strategy and themes
+        - Audience analysis and engagement patterns
+    - Support for multiple image formats
+    - Intelligent text extraction and processing
+    - Integration with Claude API for analysis
+    - Structured markdown report generation
+    - Robust error handling and logging
+
+Output Structure:
+    data/
+    └── crop_{channel}_{timestamp}_analysis.md
+    Example: crop_veritasium_20241106_124941_analysis.md
+
+Technical Details:
+    - Uses Claude API for intelligent content analysis
+    - Supports multiple file formats:
+        - Images: jpg, jpeg, png
+        - Text: txt, csv, json, html, pdf, docx, etc.
+    - Implements base64 encoding for API communication
+    - Provides structured analysis framework
+    - Generates markdown-formatted reports
+
+Requirements:
+    - Python 3.8+
+    - anthropic (Claude API client)
+    - python-dotenv (environment management)
+    - Various text processing libraries:
+        - PyPDF2
+        - python-docx
+        - html2text
+        - ebooklib
+    
+Configuration:
+    - Claude API key should be set in .env as ANTHROPIC_API_KEY
+    - Configurable through class initialization
+    - Supports custom prompt templates
+    - Logging configuration available
+"""
+
 """
 Module for analyzing YouTube channel personas using Claude API.
 python persona.py /Users/yuanlu/Code/youtube_copilot/data/crop_anthropic_youtube_chanel

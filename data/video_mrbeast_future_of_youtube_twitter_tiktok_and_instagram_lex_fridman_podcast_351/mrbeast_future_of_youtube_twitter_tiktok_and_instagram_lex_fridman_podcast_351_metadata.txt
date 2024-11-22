@@ -1,0 +1,115 @@
+YouTube Video Metadata:
+====================
+
+Video Information:
+- Title: MrBeast: Future of YouTube, Twitter, TikTok, and Instagram | Lex Fridman Podcast #351
+- Channel: Lex Fridman
+- Upload Date: 20230111
+- Duration: 2:17:46
+- View Count: 5020059
+- Like Count: 80321
+- Original URL: https://www.youtube.com/watch?v=Z3_PwvvfxIU
+
+Video Description:
+MrBeast is a legendary YouTube creator. Please support this podcast by checking out our sponsors:
+- House of Macadamias: https://houseofmacadamias.com/lex and use code LEX to get 20% off your first order
+- Eight Sleep: https://www.eightsleep.com/lex to get special savings
+- BetterHelp: https://betterhelp.com/lex to get 10% off
+
+EPISODE LINKS:
+MrBeast Main Channel: https://youtube.com/@MrBeast
+MrBeast Reacts: https://youtube.com/@BeastReacts
+MrBeast Gaming: https://youtube.com/@MrBeastGaming
+MrBeast Philanthropy: https://youtube.com/@BeastPhilanthropy
+MrBeast's TikTok: https://tiktok.com/@mrbeast
+MrBeast's Twitter: https://twitter.com/MrBeast
+MrBeast's Instagram: https://instagram.com/mrbeast
+Feastable's Website: https://feastables.com
+MrBeast Burger's Website: https://mrbeastburger.com
+MrBeast's Merch: https://shopmrbeast.com
+
+PODCAST INFO:
+Podcast website: https://lexfridman.com/podcast
+Apple Podcasts: https://apple.co/2lwqZIr
+Spotify: https://spoti.fi/2nEwCF8
+RSS: https://lexfridman.com/feed/podcast/
+Full episodes playlist: https://www.youtube.com/playlist?list=PLrAXtmErZgOdP_8GztsuKi9nrraNbKKp4
+Clips playlist: https://www.youtube.com/playlist?list=PLrAXtmErZgOeciFP3CBCIEElOJeitOr41
+
+OUTLINE:
+0:00 - 1 billion views and 1 billion subscribers
+5:46 - Mortality
+13:08 - Improving YouTube
+15:31 - Twitter
+20:19 - Brand deals
+23:29 - Audience retention
+28:08 - Hiring
+35:46 - Talking to the camera
+40:47 - Brainstorming
+53:08 - TikTok
+1:02:12 - Advice for beginners
+1:06:28 - How to grow on YouTube
+1:14:12 - Elon Musk and Twitter
+1:15:37 - 10 million dollars vs 10 million subscribers
+1:22:55 - Going to Antarctica
+1:24:40 - Process of making a video
+1:29:16 - Overcoming depression
+1:40:20 - Building a business
+1:48:15 - MrBeast Burger and Feastables
+1:52:20 - Creating video games
+1:56:29 - Making billions of dollars
+1:59:03 - Money vs Happiness
+2:05:51 - Mental health
+2:12:29 - Love
+2:14:37 - Legacy
+
+SOCIAL:
+- Twitter: https://twitter.com/lexfridman
+- LinkedIn: https://www.linkedin.com/in/lexfridman
+- Facebook: https://www.facebook.com/lexfridman
+- Instagram: https://www.instagram.com/lexfridman
+- Medium: https://medium.com/@lexfridman
+- Reddit: https://reddit.com/r/lexfridman
+- Support on Patreon: https://www.patreon.com/lexfridman
+
+Download Settings:
+- Quality: default
+- Format: mp4
+- Subtitles: Yes
+
+Technical Details:
+- Format ID: 616+251-2
+- Resolution: 1920x1080
+- FPS: 30.0
+- Video Codec: vp09.00.40.08
+- Audio Codec: opus
+
+Tags:
+- agi
+- ai
+- ai podcast
+- antarctica
+- artificial intelligence
+- artificial intelligence podcast
+- creator
+- lex ai
+- lex fridman
+- lex jre
+- lex mit
+- lex podcast
+- mit ai
+- mrbeast
+- social media
+- tiktok
+- twitter
+- video production
+- youtube
+
+Processing Information:
+- Download Date: 2024-11-13 10:18:59
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/video_mrbeast_future_of_youtube_twitter_tiktok_and_instagram_lex_fridman_podcast_351
+- Filename: mrbeast_future_of_youtube_twitter_tiktok_and_instagram_lex_fridman_podcast_351
+
+File Locations:
+- Video File: mrbeast_future_of_youtube_twitter_tiktok_and_instagram_lex_fridman_podcast_351.mp4
+- Subtitle File: mrbeast_future_of_youtube_twitter_tiktok_and_instagram_lex_fridman_podcast_351.en.vtt

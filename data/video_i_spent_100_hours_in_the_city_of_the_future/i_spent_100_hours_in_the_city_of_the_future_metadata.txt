@@ -1,0 +1,36 @@
+YouTube Video Metadata:
+====================
+
+Video Information:
+- Title: I Spent 100 Hours in the City of the Future
+- Channel: drewdoes
+- Upload Date: 20240721
+- Duration: 8:01
+- View Count: 1281234
+- Like Count: 20502
+- Original URL: https://www.youtube.com/watch?v=aHpkkOZGu0g
+
+Video Description:
+Use code DREWDOES50 to get 50% OFF your first Factor box plus 20% off your next month at https://bit.ly/4eUmMnC! Thanks to Factor for sponsoring this video.
+
+I spent 100 hours in Singapore, which has been called the City of the Future! Let's explore what makes it so futuristic and unique.
+
+Download Settings:
+- Quality: default
+- Format: mp4
+- Subtitles: No
+
+Technical Details:
+- Format ID: 616+251
+- Resolution: 1920x1080
+- FPS: 30.0
+- Video Codec: vp09.00.40.08
+- Audio Codec: opus
+
+Processing Information:
+- Download Date: 2024-11-08 11:26:51
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/video_i_spent_100_hours_in_the_city_of_the_future
+- Filename: i_spent_100_hours_in_the_city_of_the_future
+
+File Locations:
+- Video File: i_spent_100_hours_in_the_city_of_the_future.mp4
