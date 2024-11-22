@@ -1,0 +1,19 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: NBA_20241122_094805.png
+- Original Path: //Users/yuanlu/Code/youtube_copilot/data/web_snapshots/NBA_20241122_094805.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 3840x9518
+- Mode: RGB
+
+Crop Settings:
+- Part Height: 1024 pixels
+- Overlap: 100 pixels
+- Number of Parts: 10
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/output/crop_NBA_20241122_094805
+
+Processing Date: 2024-11-22 11:03:24

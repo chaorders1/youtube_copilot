@@ -1,0 +1,19 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: HowToCookThat_20241122_094301.png
+- Original Path: //Users/yuanlu/Code/youtube_copilot/data/web_snapshots/HowToCookThat_20241122_094301.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 3840x9032
+- Mode: RGB
+
+Crop Settings:
+- Part Height: 1024 pixels
+- Overlap: 100 pixels
+- Number of Parts: 9
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/output/crop_HowToCookThat_20241122_094301
+
+Processing Date: 2024-11-22 11:03:18

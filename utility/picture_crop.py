@@ -12,7 +12,7 @@ Example Usage:
     python picture_crop.py --dir "/path/to/directory"
     
     # Process directory with custom settings
-    python picture_crop.py --dir "//Users/yuanlu/Code/youtube_copilot/data/web_snapshots" --output "custom_output" --height 1024 --overlap 100
+    python picture_crop.py --dir "//Users/yuanlu/Code/youtube_copilot/data/web_snapshots" --output "/Users/yuanlu/Code/youtube_copilot/data/output" --height 1024 --overlap 100
     python picture_crop.py --dir "//Users/yuanlu/Code/youtube_copilot/data/web_snapshots"  --height 1024 --overlap 100
 
 Features:
@@ -85,14 +85,11 @@ def crop_picture(input_file: str, output_dir: str = None, part_height: int = 120
     
     # Determine output directory
     if output_dir:
-        prefix = '' if output_dir.startswith('crop_') else 'crop_'
-        output_dir = f'{prefix}{output_dir}_{image_name}'
+        output_path = Path(output_dir) / f'crop_{image_name}'
     else:
-        output_dir = f'crop_{image_name}'
-    
-    # Setup output path
-    project_root = Path(__file__).resolve().parent.parent
-    output_path = project_root / 'data' / output_dir
+        # Default fallback to project directory if no output_dir specified
+        project_root = Path(__file__).resolve().parent.parent
+        output_path = project_root / 'data' / f'crop_{image_name}'
     
     # Create output directory
     output_path.mkdir(parents=True, exist_ok=True)

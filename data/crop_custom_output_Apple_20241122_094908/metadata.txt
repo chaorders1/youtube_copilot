@@ -1,0 +1,19 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: Apple_20241122_094908.png
+- Original Path: //Users/yuanlu/Code/youtube_copilot/data/web_snapshots/Apple_20241122_094908.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 3840x8712
+- Mode: RGB
+
+Crop Settings:
+- Part Height: 1200 pixels
+- Overlap: 200 pixels
+- Number of Parts: 8
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/crop_custom_output_Apple_20241122_094908
+
+Processing Date: 2024-11-22 10:58:40

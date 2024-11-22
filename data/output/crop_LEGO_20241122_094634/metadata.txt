@@ -1,0 +1,19 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: LEGO_20241122_094634.png
+- Original Path: //Users/yuanlu/Code/youtube_copilot/data/web_snapshots/LEGO_20241122_094634.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 3840x8852
+- Mode: RGB
+
+Crop Settings:
+- Part Height: 1024 pixels
+- Overlap: 100 pixels
+- Number of Parts: 9
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/output/crop_LEGO_20241122_094634
+
+Processing Date: 2024-11-22 11:03:42

@@ -1,0 +1,19 @@
+Image Crop Metadata:
+==================
+
+Source Information:
+- Image File: BRIGHTSIDEOFFICIAL_20241122_095108.png
+- Original Path: //Users/yuanlu/Code/youtube_copilot/data/web_snapshots/BRIGHTSIDEOFFICIAL_20241122_095108.png
+- Format: PNG
+
+Image Properties:
+- Dimensions: 3840x7310
+- Mode: RGB
+
+Crop Settings:
+- Part Height: 1200 pixels
+- Overlap: 200 pixels
+- Number of Parts: 7
+- Output Directory: /Users/yuanlu/Code/youtube_copilot/data/crop_custom_output_BRIGHTSIDEOFFICIAL_20241122_095108
+
+Processing Date: 2024-11-22 10:58:53
