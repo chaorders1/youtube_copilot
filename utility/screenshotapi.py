@@ -17,6 +17,7 @@ Example Usage:
     # Command line usage:
     # Single channel capture:
     python screenshotapi.py --url='https://www.youtube.com/@veritasium'
+    python screenshotapi.py --url='https://www.youtube.com/@TuCOSMOPOLIS'
     
     # Batch capture from file:
     python screenshotapi.py --file='/Users/yuanlu/Code/youtube_copilot/data/youtube_url.txt'
