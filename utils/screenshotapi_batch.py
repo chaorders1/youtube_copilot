@@ -16,7 +16,7 @@ import time
 import logging
 import argparse
 import pandas as pd
-from typing import List
+from typing import List, Set
 from screenshotapi_url import ScreenshotAPI
 
 # Configure logging
@@ -26,6 +26,22 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+def load_completed_urls(checkpoint_file: str) -> Set[str]:
+    """
+    Load previously completed URLs from checkpoint file
+    """
+    if os.path.exists(checkpoint_file):
+        with open(checkpoint_file, 'r', encoding='utf-8') as f:
+            return set(line.strip() for line in f)
+    return set()
+
+def save_completed_url(checkpoint_file: str, url: str):
+    """
+    Save completed URL to checkpoint file
+    """
+    with open(checkpoint_file, 'a', encoding='utf-8') as f:
+        f.write(f"{url}\n")
+
 def take_screenshots(urls: List[str], api_token: str, output_dir: str, delay: float = 1.0) -> int:
     """
     Take screenshots of URLs sequentially.
@@ -33,11 +49,25 @@ def take_screenshots(urls: List[str], api_token: str, output_dir: str, delay: fl
     """
     api = ScreenshotAPI(api_token, output_dir=output_dir)
     success_count = 0
+    
+    # Create checkpoint file path
+    checkpoint_file = os.path.join(output_dir, 'completed_urls.txt')
+    completed_urls = load_completed_urls(checkpoint_file)
+    
+    # Create output directory if it doesn't exist
+    os.makedirs(output_dir, exist_ok=True)
 
     for url in urls:
+        # Skip if URL was already processed successfully
+        if url in completed_urls:
+            logger.info(f"⏭ Skipping already processed: {url}")
+            success_count += 1
+            continue
+
         try:
             if filepath := api.capture(url):
                 logger.info(f"✓ {url} -> {filepath}")
+                save_completed_url(checkpoint_file, url)
                 success_count += 1
             else:
                 logger.error(f"✗ Failed: {url}")

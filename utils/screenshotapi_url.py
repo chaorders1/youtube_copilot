@@ -49,9 +49,9 @@ class ScreenshotAPI:
         'width': '1920',
         'height': '3240',
         'full_page': 'false',
-        'delay': '12000',
-        'wait_for_event': 'networkidle0',
-        'lazy_load': 'true',
+        'delay': '1000',
+        'wait_for_event': 'load',  #networkidle0
+        'lazy_load': 'false',
         'fresh': 'true',
         'block_ads': 'true',
         'no_cookie_banners': 'true',
